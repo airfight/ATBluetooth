@@ -43,6 +43,14 @@ extension ATCentral:CBCentralManagerDelegate {
     }
     
     
+    ///discover perheral
+    func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
+        
+        _ = ATBleDevice.init(peripheral, advertisementData: advertisementData, rssi: RSSI)
+        
+        
+    }
+    
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         
     }
@@ -53,10 +61,6 @@ extension ATCentral:CBCentralManagerDelegate {
     
     
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
-        
-    }
-    
-    func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         
     }
     
