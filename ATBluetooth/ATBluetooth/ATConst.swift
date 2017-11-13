@@ -14,6 +14,7 @@
 //  Real developers ship.
 
 import UIKit
+import CoreBluetooth
 
 /// 是否输出打印
 
@@ -48,6 +49,16 @@ public enum ATCBState {
     case Opened
     case Closed
     case Unkonwn
+    
+}
+
+extension CBCentralManager {
+    
+    internal var centralManagerState: CBCentralManagerState {
+        get {
+            return CBCentralManagerState(rawValue: state.rawValue) ?? .unknown
+        }
+    }
     
 }
 

@@ -18,8 +18,10 @@ import CoreBluetooth
 
 class ATCentral: NSObject {
     
-    public var centralManager:CBCentralManager!
-    public var state:ATCBState!
+    public var centralManager:CBCentralManager?
+    public var state:ATCBState?
+    private var discoverPeripherals:[ATBleDevice] = []
+    private var connectedPeripherals:[ATBleDevice] = []
     
     override init() {
         super.init()
@@ -38,27 +40,46 @@ extension ATCentral:CBCentralManagerDelegate {
     
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         
-        updateCBState(central)
+        if #available(iOS 10.0, *) {
+            updateCBState(central)
+        } else {
+            updatecentralManagerState(central.centralManagerState)
+        }
+        
+        switch state ?? .Unkonwn {
+        case .Unkonwn:
+            break
+        case .Closed:
+            break
+        default:
+            
+            break
+        }
         
     }
-    
     
     ///discover perheral
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         
-        _ = ATBleDevice.init(peripheral, advertisementData: advertisementData, rssi: RSSI)
+        Print("discover peripheral:------\(peripheral.name ?? "nil")-----")
         
+        let device = ATBleDevice.init(peripheral, advertisementData: advertisementData, rssi: RSSI)
+        guard !discoverPeripherals.contains(device) else {
+            return
+        }
+        discoverPeripherals.append(device)
         
     }
     
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
+        
+        
         
     }
 
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
         
     }
-    
     
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         
@@ -68,9 +89,24 @@ extension ATCentral:CBCentralManagerDelegate {
         
     }
     
-    
     fileprivate func updateCBState(_ central: CBCentralManager) {
+        
         switch central.state {
+        case .unknown,.resetting:
+            state = ATCBState.Unkonwn
+            break
+        case .unsupported,.unauthorized,.poweredOff:
+            state = ATCBState.Closed
+            break
+        case .poweredOn:
+            //do SomeThing
+            state = ATCBState.Opened
+        }
+    }
+    
+    fileprivate func updatecentralManagerState(_ centralManagerState: CBCentralManagerState) {
+        
+        switch centralManagerState {
         case .unknown,.resetting:
             state = ATCBState.Unkonwn
             break
