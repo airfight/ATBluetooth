@@ -19,6 +19,7 @@
 		6886B32E1FB5AD2F00E03366 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6886B32D1FB5AD2F00E03366 /* Result.swift */; };
 		6886B3301FB5AF9300E03366 /* ATBleDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6886B32F1FB5AF9300E03366 /* ATBleDevice.swift */; };
 		68C1AE521FB979F90087B6C3 /* ATCentralManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C1AE511FB979F90087B6C3 /* ATCentralManager.swift */; };
+		68C1AE551FB98EEE0087B6C3 /* ATBlueTooth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C1AE541FB98EEE0087B6C3 /* ATBlueTooth.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,7 @@
 		6886B32D1FB5AD2F00E03366 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		6886B32F1FB5AF9300E03366 /* ATBleDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATBleDevice.swift; sourceTree = "<group>"; };
 		68C1AE511FB979F90087B6C3 /* ATCentralManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATCentralManager.swift; sourceTree = "<group>"; };
+		68C1AE541FB98EEE0087B6C3 /* ATBlueTooth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATBlueTooth.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +146,7 @@
 				68C1AE511FB979F90087B6C3 /* ATCentralManager.swift */,
 				6886B3291FB5A72500E03366 /* ATCentral.swift */,
 				6886B32F1FB5AF9300E03366 /* ATBleDevice.swift */,
+				68C1AE541FB98EEE0087B6C3 /* ATBlueTooth.swift */,
 			);
 			path = ATBluetooth;
 			sourceTree = "<group>";
@@ -289,6 +292,7 @@
 				6886B32C1FB5ACE800E03366 /* ATConst.swift in Sources */,
 				6886B3301FB5AF9300E03366 /* ATBleDevice.swift in Sources */,
 				6886B32A1FB5A72500E03366 /* ATCentral.swift in Sources */,
+				68C1AE551FB98EEE0087B6C3 /* ATBlueTooth.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

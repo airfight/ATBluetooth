@@ -27,24 +27,58 @@ class ATCentral: NSObject {
         super.init()
         
         /// alter bluetooth state
-        let options = [CBCentralManagerOptionShowPowerAlertKey:NSNumber.init(value: true),CBCentralManagerOptionRestoreIdentifierKey:"ATRestoreIdentifier"] as [String:Any]
+//        let options = [CBCentralManagerOptionShowPowerAlertKey:NSNumber.init(value: true),CBCentralManagerOptionRestoreIdentifierKey:"ATRestoreIdentifier"] as [String:Any]
         
-        centralManager = CBCentralManager(delegate: self, queue: nil,options:options)
+        centralManager = CBCentralManager(delegate: self, queue: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillResignActive), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         
+    }
+    
+    public var isScanning:Bool {
+//        set  {
+//            return newValue
+//        }
+//        get {
+            return centralManager?.isScanning ?? false
+//        }
+    }
+    
+    public func startScanForDevices(advertisingWithServices services: [String]? = nil) {
+        
+        guard !isScanning else {
+            return
+        }
+
+        centralManager?.scanForPeripherals(withServices: services?.uuids, options: nil)
+        
+    }
+    
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    @objc func applicationDidEnterBackground() {
+        centralManager?.stopScan()
+    }
+    
+    @objc func applicationWillResignActive() {
+        // TODO:
     }
     
 }
 
 extension ATCentral:CBCentralManagerDelegate {
     
-    
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
-        
+
         if #available(iOS 10.0, *) {
             updateCBState(central)
         } else {
             updatecentralManagerState(central.centralManagerState)
         }
+        Print(state)
         
         switch state ?? .Unkonwn {
         case .Unkonwn:
@@ -52,7 +86,11 @@ extension ATCentral:CBCentralManagerDelegate {
         case .Closed:
             break
         default:
-            
+
+//            if !isScanning {
+//                centralManager?.scanForPeripherals(withServices: nil, options: nil)
+//            }
+            startScanForDevices(advertisingWithServices: ["FFF0"])
             break
         }
         
@@ -63,17 +101,22 @@ extension ATCentral:CBCentralManagerDelegate {
         
         Print("discover peripheral:------\(peripheral.name ?? "nil")-----")
         
-        let device = ATBleDevice.init(peripheral, advertisementData: advertisementData, rssi: RSSI)
+        let device = ATBleDevice.init(peripheral, advertisementData: advertisementData)
+        
+//        Print("\(device.peripheral),\(device.advertisementData)")
         guard !discoverPeripherals.contains(device) else {
             return
         }
+        
+        for item in discoverPeripherals {
+            Print(item.peripheral)
+        }
+        
         discoverPeripherals.append(device)
         
     }
     
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
-        
-        
         
     }
 
@@ -85,9 +128,9 @@ extension ATCentral:CBCentralManagerDelegate {
         
     }
     
-    func centralManager(_ central: CBCentralManager, willRestoreState dict: [String : Any]) {
-        
-    }
+//    func centralManager(_ central: CBCentralManager, willRestoreState dict: [String : Any]) {
+//
+//    }
     
     fileprivate func updateCBState(_ central: CBCentralManager) {
         
@@ -114,9 +157,15 @@ extension ATCentral:CBCentralManagerDelegate {
             state = ATCBState.Closed
             break
         case .poweredOn:
-            //do SomeThing
             state = ATCBState.Opened
         }
+        
     }
     
+}
+
+extension Collection where Iterator.Element == String {
+    var uuids:[CBUUID] {
+        return self.map{(CBUUID(string: $0))}
+    }
 }

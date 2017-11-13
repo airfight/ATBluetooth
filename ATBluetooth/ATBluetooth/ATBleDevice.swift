@@ -21,14 +21,14 @@ class ATBleDevice: NSObject {
     //peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber
     var peripheral:CBPeripheral!
     var advertisementData:[String:Any]!
-    var rssi:NSNumber!
+//    var rssi:NSNumber! , rssi RSSI: NSNumber
     
-    init(_ peripheral:CBPeripheral,advertisementData: [String : Any], rssi RSSI: NSNumber) {
+    init(_ peripheral:CBPeripheral,advertisementData: [String : Any]) {
 
         super.init()
         self.peripheral = peripheral
         self.advertisementData = advertisementData
-        self.rssi = RSSI
+//        self.rssi = RSSI
     }
     
 //    convenience init(_ peripheral:CBPeripheral,advertisementData: [String : Any], rssi RSSI: NSNumber) {
