@@ -20,7 +20,7 @@ class ATCentral: NSObject {
     
     public var centralManager:CBCentralManager?
     public var state:ATCBState?
-    private var discoverPeripherals:[ATBleDevice] = []
+    public var discoverPeripherals:[ATBleDevice] = []
     private var connectedPeripherals:[ATBleDevice] = []
     private(set) open var connectedDevice: ATBleDevice?
     
@@ -73,7 +73,7 @@ class ATCentral: NSObject {
         
     }
     
-    public func connect(_ device:ATBleDevice) {
+    public func connect(_ device:ATBleDevice?) {
         
         guard connectedDevice == nil else {
             return
@@ -157,9 +157,6 @@ extension ATCentral:CBCentralManagerDelegate {
         guard let _ = connectedDevice else {
             return
         }
-        
-//        device.peripheral.delegate
-        
     }
 
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {

@@ -13,9 +13,12 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        let _ = ATBlueTooth.default
+        let atBlueTooth = ATBlueTooth.default
+        sleep(5)
 //        _ = ATCentral()
-
+        let device = atBlueTooth.atCentral.discoverPeripherals.filter({$0.peripheral.name == "Ozner Cup"}).last
+        atBlueTooth.atCentral.connect(device)
+        device?.delegate = self
     }
 
     override func didReceiveMemoryWarning() {
@@ -24,5 +27,16 @@ class ViewController: UIViewController {
     }
 
 
+}
+
+extension ViewController:ATBleDeviceStateDelegate {
+    
+    func updatedATBleDeviceState(_ state: ATBleDeviceState, error: Error?) {
+        Print(state)
+    }
+    
+    
+    
+    
 }
 
