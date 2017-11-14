@@ -141,9 +141,9 @@
 		6886B3281FB5A6DA00E03366 /* ATBluetooth */ = {
 			isa = PBXGroup;
 			children = (
+				68C1AE511FB979F90087B6C3 /* ATCBPeripheralDelegate.swift */,
 				6886B32D1FB5AD2F00E03366 /* Result.swift */,
 				6886B32B1FB5ACE800E03366 /* ATConst.swift */,
-				68C1AE511FB979F90087B6C3 /* ATCBPeripheralDelegate.swift */,
 				6886B3291FB5A72500E03366 /* ATCentral.swift */,
 				6886B32F1FB5AF9300E03366 /* ATBleDevice.swift */,
 				68C1AE541FB98EEE0087B6C3 /* ATBlueTooth.swift */,

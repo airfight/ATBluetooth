@@ -26,12 +26,12 @@ class ATBleDevice: NSObject {
     
     //peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber
     var peripheral:CBPeripheral!
-    var advertisementData:[String:Any]!
-    var rssi:NSNumber!
+    var advertisementData:[String:Any]?
+    var rssi:NSNumber?
     public var delegate:ATBleDeviceStateDelegate?
     private var serviceDelegate:ATCBPeripheralDelegate?
     
-    init( _ peripheral:CBPeripheral,advertisementData: [String : Any], rssi RSSI: NSNumber) {
+    init( _ peripheral:CBPeripheral,advertisementData: [String : Any]?, rssi RSSI: NSNumber?) {
 
         super.init()
         self.peripheral = peripheral
@@ -43,7 +43,7 @@ class ATBleDevice: NSObject {
     
     internal func registerPeripheralDelegate() {
         
-//        peripheral.delegate =
+        peripheral.delegate = serviceDelegate
         
     }
     

@@ -27,5 +27,98 @@ class ATCBPeripheralDelegate: NSObject,CBPeripheralDelegate {
         
     }
     
+    //MARK - CBPeripheralDelegate
+    
+    //MARK: - Discovering Services
+    ///Invoked when you discover the peripheral’s available services.
+    internal func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
+        
+        if error == nil {
+            
+            for item in peripheral.services {
+                
+                peripheral.discoverCharacteristics(nil, for: item)
+                
+            }
+            
+        }
+        
+    }
+    
+    ///Invoked when you discover the included services of a specified service.
+    internal func peripheral(_ peripheral: CBPeripheral, didDiscoverIncludedServicesFor service: CBService, error: Error?) {
+        
+    }
+    
+    //MARK: - Discovering Characteristics and Characteristic Descriptors
+    
+    ///Invoked when you discover the characteristics of a specified service.
+    internal func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
+        
+        if error == nil {
+            
+            for item in service.characteristics {
+                
+                guard let _ = item else {
+                    continue
+                }
+                peripheral.readValue(for: item)
+                peripheral.discoverDescriptors(for: item)
+            }
+            
+        }
+        
+    }
+    
+    ///Invoked when you discover the descriptors of a specified characteristic.
+    internal func peripheral(_ peripheral: CBPeripheral, didDiscoverDescriptorsFor characteristic: CBCharacteristic, error: Error?) {
+        
+        
+        
+    }
+    
+    //MARK: - Retrieving Characteristic and Characteristic Descriptor Values
+   
+    ///Invoked when you retrieve a specified characteristic’s value, or when the peripheral device notifies your app that the characteristic’s value has changed.
+    internal func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
+        
+        if error == nil {
+            Print("\(characteristic.uuid),\(characteristic.value)")
+        }
+        
+    }
+    
+    ///Invoked when you retrieve a specified characteristic descriptor’s value.
+    internal func  peripheral(_ peripheral: CBPeripheral, didUpdateValueFor descriptor: CBDescriptor, error: Error?) {
+        
+        Print("\(descriptor.uuid),\(descriptor.value)")
+        
+    }
+    
+    //MARK: - Writing Characteristic and Characteristic Descriptor Values
+    
+    ///Invoked when you write data to a characteristic’s value.
+    internal func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
+        
+    }
+    
+    ///Invoked when you write data to a characteristic descriptor’s value.
+    internal func peripheral(_ peripheral: CBPeripheral, didWriteValueFor descriptor: CBDescriptor, error: Error?) {
+        
+    }
+    
+    //MARK: - Managing Notifications for a Characteristic’s Value
+    
+    ///Invoked when the peripheral receives a request to start or stop providing notifications for a specified characteristic’s value.
+    internal func peripheral(_ peripheral: CBPeripheral, didUpdateNotificationStateFor characteristic: CBCharacteristic, error: Error?) {
+        
+    }
+    
+    internal func peripheralDidUpdateName(_ peripheral: CBPeripheral) {
+        
+    }
+
+    
+    
     
 }
