@@ -16,8 +16,16 @@
 import UIKit
 import CoreBluetooth
 
-class ATCentralManager: CBCentralManager {
+class ATCBPeripheralDelegate: NSObject,CBPeripheralDelegate {
+    
+    private(set) var peripheral: CBPeripheral?
     
     
-
+    init(_ peripheral:CBPeripheral) {
+        super.init()
+        self.peripheral = peripheral
+        
+    }
+    
+    
 }

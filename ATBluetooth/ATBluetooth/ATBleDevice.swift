@@ -16,19 +16,35 @@
 import UIKit
 import CoreBluetooth
 
+protocol ATBleDeviceStateDelegate {
+    
+    func updatedATBleDeviceState(_ state:ATBleDeviceState,error:Error?)
+    
+}
+
 class ATBleDevice: NSObject {
     
     //peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber
     var peripheral:CBPeripheral!
     var advertisementData:[String:Any]!
-//    var rssi:NSNumber! , rssi RSSI: NSNumber
+    var rssi:NSNumber!
+    public var delegate:ATBleDeviceStateDelegate?
+    private var serviceDelegate:ATCBPeripheralDelegate?
     
-    init(_ peripheral:CBPeripheral,advertisementData: [String : Any]) {
+    init( _ peripheral:CBPeripheral,advertisementData: [String : Any], rssi RSSI: NSNumber) {
 
         super.init()
         self.peripheral = peripheral
         self.advertisementData = advertisementData
-//        self.rssi = RSSI
+        self.rssi = RSSI
+        serviceDelegate = ATCBPeripheralDelegate.init(peripheral)
+
+    }
+    
+    internal func registerPeripheralDelegate() {
+        
+//        peripheral.delegate =
+        
     }
     
 //    convenience init(_ peripheral:CBPeripheral,advertisementData: [String : Any], rssi RSSI: NSNumber) {

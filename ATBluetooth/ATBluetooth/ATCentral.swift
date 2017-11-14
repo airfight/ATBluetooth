@@ -22,6 +22,10 @@ class ATCentral: NSObject {
     public var state:ATCBState?
     private var discoverPeripherals:[ATBleDevice] = []
     private var connectedPeripherals:[ATBleDevice] = []
+    private(set) open var connectedDevice: ATBleDevice?
+    
+    private lazy var dispatchQueue:DispatchQueue = DispatchQueue(label: "ATBluetooth.kit",attributes:[])
+    private lazy var scanThread = Thread.init(target: self, selector: #selector(startScanPeripherals), object: nil)
     
     override init() {
         super.init()
@@ -29,7 +33,7 @@ class ATCentral: NSObject {
         /// alter bluetooth state
 //        let options = [CBCentralManagerOptionShowPowerAlertKey:NSNumber.init(value: true),CBCentralManagerOptionRestoreIdentifierKey:"ATRestoreIdentifier"] as [String:Any]
         
-        centralManager = CBCentralManager(delegate: self, queue: nil)
+        centralManager = CBCentralManager(delegate: self, queue: dispatchQueue)
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(applicationWillResignActive), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         
@@ -54,6 +58,41 @@ class ATCentral: NSObject {
         
     }
     
+    @objc public func startScanPeripherals() {
+        
+        guard !isScanning else {
+            return
+        }
+        
+//        while 1 == 1 {
+        
+        centralManager?.scanForPeripherals(withServices: [CBUUID(string: "FFF0")], options: nil)
+
+//        }
+        
+        
+    }
+    
+    public func connect(_ device:ATBleDevice) {
+        
+        guard connectedDevice == nil else {
+            return
+        }
+        
+        connectedDevice = device
+        guard let peripheral = connectedDevice?.peripheral else {
+            return
+        }
+        
+        guard peripheral.state == .disconnected else {
+            return
+        }
+        
+        connectedDevice?.delegate?.updatedATBleDeviceState(.Connecting,error:nil)
+
+        centralManager?.connect(peripheral, options: [CBConnectPeripheralOptionNotifyOnDisconnectionKey: NSNumber(value: true)])
+        
+    }
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -91,6 +130,7 @@ extension ATCentral:CBCentralManagerDelegate {
 //                centralManager?.scanForPeripherals(withServices: nil, options: nil)
 //            }
             startScanForDevices(advertisingWithServices: ["FFF0"])
+//            scanThread.start()
             break
         }
         
@@ -100,16 +140,12 @@ extension ATCentral:CBCentralManagerDelegate {
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         
         Print("discover peripheral:------\(peripheral.name ?? "nil")-----")
+        // if CBPeripheral name is nil,untreated
         
-        let device = ATBleDevice.init(peripheral, advertisementData: advertisementData)
+        let device = ATBleDevice.init(peripheral, advertisementData: advertisementData, rssi: RSSI)
         
-//        Print("\(device.peripheral),\(device.advertisementData)")
-        guard !discoverPeripherals.contains(device) else {
+        guard !discoverPeripherals.peripherals.contains(device.peripheral) else {
             return
-        }
-        
-        for item in discoverPeripherals {
-            Print(item.peripheral)
         }
         
         discoverPeripherals.append(device)
@@ -118,13 +154,27 @@ extension ATCentral:CBCentralManagerDelegate {
     
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         
+        guard let _ = connectedDevice else {
+            return
+        }
+        
+//        device.peripheral.delegate
+        
     }
 
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
         
+        connectedDevice?.delegate?.updatedATBleDeviceState(.ConnectedFailed, error: error)
+        
     }
     
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
+        
+        connectedDevice?.delegate?.updatedATBleDeviceState(.Disconnect, error: error)
+        
+        guard peripheral.identifier.uuidString == connectedDevice?.peripheral.identifier.uuidString else {
+            return
+        }
         
     }
     
@@ -169,3 +219,10 @@ extension Collection where Iterator.Element == String {
         return self.map{(CBUUID(string: $0))}
     }
 }
+
+extension Collection where Iterator.Element == ATBleDevice {
+    var peripherals:[CBPeripheral] {
+        return self.map{$0.peripheral}
+    }
+}
+

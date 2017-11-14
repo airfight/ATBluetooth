@@ -52,6 +52,14 @@ public enum ATCBState {
     
 }
 
+public enum ATBleDeviceState {
+    
+    case Connecting
+    case Connected
+    case Disconnect
+    case ConnectedFailed
+}
+
 extension CBCentralManager {
     
     internal var centralManagerState: CBCentralManagerState {
