@@ -18,21 +18,25 @@ import CoreBluetooth
 
 public class ATConfiguration {
 
-    public let dataServiceUUID: CBUUID
+    public let writeServiceUUIDString: String
     
-    public let dataServiceCharacteristicUUID: CBUUID
+    public let readServiceCharacteristicUUIDString: String
     
-    public init(_ dataServiceUUID: UUID, dataServiceCharacteristicUUID: UUID) {
-        self.dataServiceUUID = CBUUID(nsuuid: dataServiceUUID)
-        self.dataServiceCharacteristicUUID = CBUUID(nsuuid: dataServiceCharacteristicUUID)
+    public var writeCharacteristic:CBCharacteristic?
+    public var readCharacteristic:CBCharacteristic?
+    
+    
+    public init(_ writeServiceUUIDString: String, readServiceCharacteristicUUIDString: String) {
+        self.writeServiceUUIDString = writeServiceUUIDString
+        self.readServiceCharacteristicUUIDString = readServiceCharacteristicUUIDString
     }
     
-    internal func characteristicUUIDsForServiceUUID(_ serviceUUID: CBUUID) -> [CBUUID] {
-        if serviceUUID == dataServiceUUID {
-            return [ dataServiceCharacteristicUUID ]
-        }
-        return []
-    }
+//    internal func characteristicUUIDsForServiceUUID(_ serviceUUID: CBUUID) -> [CBUUID] {
+//        if serviceUUID == dataServiceUUID {
+//            return [ dataServiceCharacteristicUUID ]
+//        }
+//        return []
+//    }
 
     
 }

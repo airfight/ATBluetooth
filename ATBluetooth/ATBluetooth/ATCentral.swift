@@ -162,6 +162,7 @@ extension ATCentral:CBCentralManagerDelegate {
 //        device.registerPeripheralDelegate()
         device.peripheral.delegate = self
         device.peripheral.discoverServices(nil)
+
         device.delegate?.updatedATBleDeviceState(.Connected, error: nil)
         
     }
@@ -237,6 +238,8 @@ extension ATCentral:CBPeripheralDelegate {
             return
         }
         
+//        peripheral.discoverCharacteristics([CBUUID(string: "0x2A23")], for: <#T##CBService#>)
+        
         for service in services {
             
             if service.characteristics != nil {
@@ -244,7 +247,8 @@ extension ATCentral:CBPeripheralDelegate {
                 self.peripheral(peripheral, didDiscoverCharacteristicsFor: service, error: nil)
                 
             } else {
-                peripheral.discoverCharacteristics(configuration?.characteristicUUIDsForServiceUUID(service.uuid), for: service)
+                
+                peripheral.discoverCharacteristics(nil, for: service)
                 
             }
             
@@ -262,12 +266,31 @@ extension ATCentral:CBPeripheralDelegate {
     ///Invoked when you discover the characteristics of a specified service.
     internal func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         
-        
-        guard service.uuid == configuration?.dataServiceUUID,let dataCharacteristic = service.characteristics?.filter({$0.uuid == configuration?.dataServiceCharacteristicUUID}).last else {
-            return
+        for item: CBCharacteristic in service.characteristics! {
+            
+            Print(item.uuid.uuidString)
+            
+            //readCharacteristics
+            if item.uuid.uuidString == configuration?.readServiceCharacteristicUUIDString {
+                
+                peripheral.readValue(for: item)
+                configuration?.readCharacteristic = item
+                peripheral.setNotifyValue(true, for: item)
+                
+            }
+            
+            //writeCharacteristics
+            if item.uuid.uuidString == configuration?.writeServiceUUIDString {
+                configuration?.writeCharacteristic = item
+            }
+            
         }
-        
-        peripheral.setNotifyValue(true, for: dataCharacteristic)
+
+//        guard service.uuid == configuration?.dataServiceUUID,let dataCharacteristic = service.characteristics?.filter({$0.uuid == configuration?.dataServiceCharacteristicUUID}).last else {
+//            return
+//        }
+//
+//        peripheral.setNotifyValue(true, for: dataCharacteristic)
         
         
     }
@@ -284,18 +307,20 @@ extension ATCentral:CBPeripheralDelegate {
     ///Invoked when you retrieve a specified characteristic’s value, or when the peripheral device notifies your app that the characteristic’s value has changed.
     internal func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         
-        guard characteristic.uuid == configuration?.dataServiceCharacteristicUUID else {
-            return
-        }
-        
+//        guard characteristic.uuid == configuration?.dataServiceCharacteristicUUID else {
+//            return
+//        }
+//        
         Print(characteristic.value)
+        let data1 = Data.init(bytes: [0x12])
+        connectedDevice?.peripheral.writeValue(data1, for: (configuration?.writeCharacteristic)!, type: CBCharacteristicWriteType.withResponse)
         
     }
     
     ///Invoked when you retrieve a specified characteristic descriptor’s value.
     internal func  peripheral(_ peripheral: CBPeripheral, didUpdateValueFor descriptor: CBDescriptor, error: Error?) {
         
-        Print("\(descriptor.uuid),\(descriptor.value)")
+        Print("\(descriptor.uuid),\(String(describing: descriptor.value))")
         
     }
     

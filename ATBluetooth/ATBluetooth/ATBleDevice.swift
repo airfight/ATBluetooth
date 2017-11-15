@@ -19,6 +19,7 @@ import CoreBluetooth
 protocol ATBleDeviceStateDelegate {
     
     func updatedATBleDeviceState(_ state:ATBleDeviceState,error:Error?)
+    func updatedIfWriteSuccess(error:Error?)
     
 }
 

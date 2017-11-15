@@ -50,7 +50,7 @@ class ATCBPeripheralDelegate: NSObject,CBPeripheralDelegate {
                 self.peripheral(peripheral, didDiscoverCharacteristicsFor: service, error: nil)
                 
             } else {
-            peripheral.discoverCharacteristics(configuration?.characteristicUUIDsForServiceUUID(service.uuid), for: service)
+//            peripheral.discoverCharacteristics(configuration?.characteristicUUIDsForServiceUUID(service.uuid), for: service)
                 
             }
             
@@ -69,11 +69,11 @@ class ATCBPeripheralDelegate: NSObject,CBPeripheralDelegate {
     internal func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         
         
-        guard service.uuid == configuration?.dataServiceUUID,let dataCharacteristic = service.characteristics?.filter({$0.uuid == configuration?.dataServiceCharacteristicUUID}).last else {
-            return
-        }
-        
-        peripheral.setNotifyValue(true, for: dataCharacteristic)
+//        guard service.uuid == configuration?.dataServiceUUID,let dataCharacteristic = service.characteristics?.filter({$0.uuid == configuration?.dataServiceCharacteristicUUID}).last else {
+//            return
+//        }
+//        
+//        peripheral.setNotifyValue(true, for: dataCharacteristic)
         
         
     }
@@ -90,9 +90,9 @@ class ATCBPeripheralDelegate: NSObject,CBPeripheralDelegate {
     ///Invoked when you retrieve a specified characteristic’s value, or when the peripheral device notifies your app that the characteristic’s value has changed.
     internal func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         
-        guard characteristic.uuid == configuration?.dataServiceCharacteristicUUID else {
-            return
-        }
+//        guard characteristic.uuid == configuration?.dataServiceCharacteristicUUID else {
+//            return
+//        }
         
         Print(characteristic.value)
         

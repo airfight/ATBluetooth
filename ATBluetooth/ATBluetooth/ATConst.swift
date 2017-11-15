@@ -60,6 +60,11 @@ public enum ATBleDeviceState {
     case ConnectFailed
 }
 
+public enum ATBleDeviceWriteState {
+    case WriteSuccess
+    case WriteFailed
+}
+
 extension CBCentralManager {
     
     internal var centralManagerState: CBCentralManagerState {
