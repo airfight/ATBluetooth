@@ -15,7 +15,6 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         let atBlueTooth = ATBlueTooth.default
         sleep(5)
-//        _ = ATCentral()
         
         let device = atBlueTooth.atCentral.discoverPeripherals.filter({$0.peripheral.name == "Ozner Cup"}).last
         
@@ -25,6 +24,11 @@ class ViewController: UIViewController {
         atBlueTooth.atCentral.configuration = ATConfiguration("FFF2", readServiceCharacteristicUUIDString: "FFF1")
         atBlueTooth.atCentral.connect(device)
         device?.delegate = self
+        
+
+//        let data1 = Data.init(bytes: [0x12])
+//        device?.peripheral.writeValue(data1, for: (atBlueTooth.atCentral.configuration?.writeCharacteristic)!, type: CBCharacteristicWriteType.withResponse)
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -36,7 +40,15 @@ class ViewController: UIViewController {
 }
 
 extension ViewController:ATBleDeviceStateDelegate {
-    func updatedIfWriteSuccess(error: Error?) {
+    
+    func updatedIfWriteSuccess(_ result: Result<Any>?) {
+        
+        switch result! {
+        case .Success(let value):
+            Print(value)
+        case .Failure(let error):
+            Print(error)
+        }
         
     }
     

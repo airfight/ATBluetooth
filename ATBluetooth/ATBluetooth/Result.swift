@@ -17,7 +17,7 @@ import Foundation
 
 public enum Result<Value> {
     
-    case Success(Value)
+    case Success(Data?)
     case Failure(Error)
     
     /// if success
@@ -32,7 +32,7 @@ public enum Result<Value> {
         
     }
     
-    public var value:Value? {
+    public var value:Data? {
         
         switch self {
         case .Success(let value):

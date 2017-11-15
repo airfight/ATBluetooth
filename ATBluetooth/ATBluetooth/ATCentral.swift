@@ -310,16 +310,20 @@ extension ATCentral:CBPeripheralDelegate {
 //        guard characteristic.uuid == configuration?.dataServiceCharacteristicUUID else {
 //            return
 //        }
-//        
-        Print(characteristic.value)
-        let data1 = Data.init(bytes: [0x12])
-        connectedDevice?.peripheral.writeValue(data1, for: (configuration?.writeCharacteristic)!, type: CBCharacteristicWriteType.withResponse)
+//
+        guard error == nil else {
+            connectedDevice?.delegate?.updatedIfWriteSuccess(Result.Failure(error!))
+            return
+        }
+        
+        connectedDevice?.delegate?.updatedIfWriteSuccess(Result.Success(characteristic.value))
         
     }
     
     ///Invoked when you retrieve a specified characteristic descriptor’s value.
     internal func  peripheral(_ peripheral: CBPeripheral, didUpdateValueFor descriptor: CBDescriptor, error: Error?) {
         
+      
         Print("\(descriptor.uuid),\(String(describing: descriptor.value))")
         
     }
@@ -328,6 +332,10 @@ extension ATCentral:CBPeripheralDelegate {
     
     ///Invoked when you write data to a characteristic’s value.
     internal func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
+        
+        if error != nil {
+            connectedDevice?.delegate?.updatedIfWriteSuccess(Result.Failure(error!))
+        }
         
     }
     
