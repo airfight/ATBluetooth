@@ -25,6 +25,7 @@ class ATCBPeripheralDelegate: NSObject,CBPeripheralDelegate {
     init(_ peripheral:CBPeripheral) {
         super.init()
         self.peripheral = peripheral
+        peripheral.delegate = self
         
     }
     

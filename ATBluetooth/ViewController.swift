@@ -16,7 +16,13 @@ class ViewController: UIViewController {
         let atBlueTooth = ATBlueTooth.default
         sleep(5)
 //        _ = ATCentral()
+        
         let device = atBlueTooth.atCentral.discoverPeripherals.filter({$0.peripheral.name == "Ozner Cup"}).last
+        
+        let uuid1 = UUID(uuidString: "6E6B5C64-FAF7-40AE-9C21-D4933AF45B23")!
+        let uuid2 = UUID(uuidString: "477A2967-1FAB-4DC5-920A-DEE5DE685A3D")!
+        
+        atBlueTooth.atCentral.configuration = ATConfiguration(uuid1, dataServiceCharacteristicUUID: uuid2)
         atBlueTooth.atCentral.connect(device)
         device?.delegate = self
     }

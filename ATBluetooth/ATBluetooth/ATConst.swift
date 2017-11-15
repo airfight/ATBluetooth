@@ -57,7 +57,7 @@ public enum ATBleDeviceState {
     case Connecting
     case Connected
     case Disconnect
-    case ConnectedFailed
+    case ConnectFailed
 }
 
 extension CBCentralManager {

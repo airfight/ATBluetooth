@@ -29,7 +29,7 @@ class ATBleDevice: NSObject {
     var advertisementData:[String:Any]?
     var rssi:NSNumber?
     public var delegate:ATBleDeviceStateDelegate?
-    private var serviceDelegate:ATCBPeripheralDelegate?
+    internal var serviceDelegate:ATCBPeripheralDelegate?
     
     init( _ peripheral:CBPeripheral,advertisementData: [String : Any]?, rssi RSSI: NSNumber?) {
 
@@ -57,3 +57,4 @@ class ATBleDevice: NSObject {
     
 
 }
+
