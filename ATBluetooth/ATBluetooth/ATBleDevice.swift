@@ -25,9 +25,10 @@ protocol ATBleDeviceStateDelegate {
 
 class ATBleDevice: NSObject {
     
-    var peripheral:CBPeripheral!
-    var advertisementData:[String:Any]?
-    var rssi:NSNumber?
+    internal var peripheral:CBPeripheral!
+    internal var advertisementData:[String:Any]?
+    internal var rssi:NSNumber?
+    internal var configuration:ATConfiguration?
     public var delegate:ATBleDeviceStateDelegate?
     internal var serviceDelegate:ATCBPeripheralDelegate?
     
@@ -40,6 +41,17 @@ class ATBleDevice: NSObject {
         serviceDelegate = ATCBPeripheralDelegate.init(peripheral)
 
     }
+    
+    internal func writeData(_ data:Data,type:ATCharacteristicWriteType = .withResponse) {
+        
+        guard configuration != nil else {
+            return
+        }
+        
+        peripheral.writeValue(data, for: (configuration?.writeCharacteristic)!,type: (type == .withResponse ? CBCharacteristicWriteType.withResponse : CBCharacteristicWriteType.withoutResponse))
+        
+    }
+    
     
     internal func registerPeripheralDelegate() {
         

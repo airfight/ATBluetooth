@@ -25,8 +25,11 @@ class ViewController: UIViewController {
         atBlueTooth.atCentral.connect(device)
         device?.delegate = self
         
+        sleep(5)
 
-//        let data1 = Data.init(bytes: [0x12])
+        let data1 = Data.init(bytes: [0x12])
+        device?.writeData(data1, type: ATCharacteristicWriteType.withResponse)
+
 //        device?.peripheral.writeValue(data1, for: (atBlueTooth.atCentral.configuration?.writeCharacteristic)!, type: CBCharacteristicWriteType.withResponse)
         
     }

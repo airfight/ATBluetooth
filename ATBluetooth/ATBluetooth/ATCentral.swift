@@ -81,6 +81,7 @@ class ATCentral: NSObject {
         }
         
         connectedDevice = device
+        connectedDevice?.configuration = configuration
         guard let peripheral = connectedDevice?.peripheral else {
             return
         }

@@ -27,6 +27,7 @@ public class ATConfiguration {
     
     
     public init(_ writeServiceUUIDString: String, readServiceCharacteristicUUIDString: String) {
+        
         self.writeServiceUUIDString = writeServiceUUIDString
         self.readServiceCharacteristicUUIDString = readServiceCharacteristicUUIDString
     }
