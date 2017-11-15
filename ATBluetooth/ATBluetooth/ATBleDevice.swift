@@ -19,13 +19,12 @@ import CoreBluetooth
 protocol ATBleDeviceStateDelegate {
     
     func updatedATBleDeviceState(_ state:ATBleDeviceState,error:Error?)
-    func updatedIfWriteSuccess(_ info:Result<Any>?)
+    func updatedIfWriteSuccess(_ result:Result<Any>?)
     
 }
 
 class ATBleDevice: NSObject {
     
-    //peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber
     var peripheral:CBPeripheral!
     var advertisementData:[String:Any]?
     var rssi:NSNumber?

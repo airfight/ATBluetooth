@@ -43,6 +43,10 @@ extension ViewController:ATBleDeviceStateDelegate {
     
     func updatedIfWriteSuccess(_ result: Result<Any>?) {
         
+        guard result != nil else {
+            return
+        }
+        
         switch result! {
         case .Success(let value):
             Print(value)
@@ -51,7 +55,6 @@ extension ViewController:ATBleDeviceStateDelegate {
         }
         
     }
-    
     
     func updatedATBleDeviceState(_ state: ATBleDeviceState, error: Error?) {
         Print(state)
