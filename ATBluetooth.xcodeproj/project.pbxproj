@@ -21,6 +21,8 @@
 		6886B3301FB5AF9300E03366 /* ATBleDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6886B32F1FB5AF9300E03366 /* ATBleDevice.swift */; };
 		68C1AE521FB979F90087B6C3 /* ATCBPeripheralDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C1AE511FB979F90087B6C3 /* ATCBPeripheralDelegate.swift */; };
 		68C1AE551FB98EEE0087B6C3 /* ATBlueTooth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C1AE541FB98EEE0087B6C3 /* ATBlueTooth.swift */; };
+		68FAA1BE1FBC3D5700E42DCE /* DeviceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68FAA1BC1FBC3D5700E42DCE /* DeviceCell.swift */; };
+		68FAA1BF1FBC3D5700E42DCE /* DeviceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 68FAA1BD1FBC3D5700E42DCE /* DeviceCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +63,8 @@
 		6886B32F1FB5AF9300E03366 /* ATBleDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATBleDevice.swift; sourceTree = "<group>"; };
 		68C1AE511FB979F90087B6C3 /* ATCBPeripheralDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATCBPeripheralDelegate.swift; sourceTree = "<group>"; };
 		68C1AE541FB98EEE0087B6C3 /* ATBlueTooth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATBlueTooth.swift; sourceTree = "<group>"; };
+		68FAA1BC1FBC3D5700E42DCE /* DeviceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceCell.swift; sourceTree = "<group>"; };
+		68FAA1BD1FBC3D5700E42DCE /* DeviceCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DeviceCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +118,8 @@
 				6886B3281FB5A6DA00E03366 /* ATBluetooth */,
 				6886B2FA1FB5A5B600E03366 /* AppDelegate.swift */,
 				6886B2FC1FB5A5B600E03366 /* ViewController.swift */,
+				68FAA1BC1FBC3D5700E42DCE /* DeviceCell.swift */,
+				68FAA1BD1FBC3D5700E42DCE /* DeviceCell.xib */,
 				6886B2FE1FB5A5B600E03366 /* Main.storyboard */,
 				6886B3011FB5A5B600E03366 /* Assets.xcassets */,
 				6886B3031FB5A5B600E03366 /* LaunchScreen.storyboard */,
@@ -264,6 +270,7 @@
 				6886B3051FB5A5B600E03366 /* LaunchScreen.storyboard in Resources */,
 				6886B3021FB5A5B600E03366 /* Assets.xcassets in Resources */,
 				6886B3001FB5A5B600E03366 /* Main.storyboard in Resources */,
+				68FAA1BF1FBC3D5700E42DCE /* DeviceCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -291,6 +298,7 @@
 				6886B2FD1FB5A5B600E03366 /* ViewController.swift in Sources */,
 				68C1AE521FB979F90087B6C3 /* ATCBPeripheralDelegate.swift in Sources */,
 				6886B32E1FB5AD2F00E03366 /* Result.swift in Sources */,
+				68FAA1BE1FBC3D5700E42DCE /* DeviceCell.swift in Sources */,
 				6842D1C51FBAECCA00D59813 /* ATConfiguration.swift in Sources */,
 				6886B2FB1FB5A5B600E03366 /* AppDelegate.swift in Sources */,
 				6886B32C1FB5ACE800E03366 /* ATConst.swift in Sources */,
