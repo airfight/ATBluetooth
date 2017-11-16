@@ -16,14 +16,22 @@
 import UIKit
 import CoreBluetooth
 
+protocol ATCentralDelegte {
+     func didFoundATBleDevice(_ device:ATBleDevice)
+}
+
+typealias bleStartScan = () -> Void
+
 class ATCentral: NSObject {
     
     public var centralManager:CBCentralManager?
     public var state:ATCBState?
+    public var delegate:ATCentralDelegte?
     public var discoverPeripherals:[ATBleDevice] = []
     private var connectedPeripherals:[ATBleDevice] = []
     private(set) open var connectedDevice: ATBleDevice?
     internal var configuration:ATConfiguration?
+    internal var scanBlock:bleStartScan?
     
     private lazy var dispatchQueue:DispatchQueue = DispatchQueue(label: "ATBluetooth.kit",attributes:[])
     private lazy var scanThread = Thread.init(target: self, selector: #selector(startScanPeripherals), object: nil)
@@ -40,14 +48,7 @@ class ATCentral: NSObject {
         
     }
     
-    public var isScanning:Bool {
-//        set  {
-//            return newValue
-//        }
-//        get {
-            return centralManager?.isScanning ?? false
-//        }
-    }
+    public var isScanning:Bool { return centralManager?.isScanning ?? false }
     
     public func startScanForDevices(advertisingWithServices services: [String]? = nil) {
         
@@ -59,25 +60,46 @@ class ATCentral: NSObject {
         
     }
     
+    public func stopScan() {
+        
+        centralManager?.stopScan()
+    }
+    
+    public func disconnectDevice() {
+        
+        guard let device = connectedDevice else {
+            return
+        }
+        
+        if device.peripheral.state != .connected  {
+            return
+        }
+        
+        centralManager?.cancelPeripheralConnection(device.peripheral)
+        
+        device.delegate?.updatedATBleDeviceState(.Disconnect, error: nil)
+        
+    }
+    
     @objc public func startScanPeripherals() {
         
         guard !isScanning else {
             return
         }
         
-//        while 1 == 1 {
-        
         centralManager?.scanForPeripherals(withServices: [CBUUID(string: "FFF0")], options: nil)
-
-//        }
-        
         
     }
     
     public func connect(_ device:ATBleDevice?) {
         
-        guard connectedDevice == nil else {
+        guard connectedDevice?.peripheral != device?.peripheral else {
             return
+        }
+        
+        if let oldDevice = connectedDevice {
+            
+            centralManager?.cancelPeripheralConnection(oldDevice.peripheral)
         }
         
         connectedDevice = device
@@ -127,12 +149,8 @@ extension ATCentral:CBCentralManagerDelegate {
         case .Closed:
             break
         default:
-
-//            if !isScanning {
-//                centralManager?.scanForPeripherals(withServices: nil, options: nil)
-//            }
-            startScanForDevices(advertisingWithServices: ["FFF0"])
-//            scanThread.start()
+//            startScanForDevices()
+            scanBlock?()
             break
         }
         
@@ -151,6 +169,11 @@ extension ATCentral:CBCentralManagerDelegate {
         }
         
         discoverPeripherals.append(device)
+        DispatchQueue.main.async {
+            
+            self.delegate?.didFoundATBleDevice(device)
+
+        }
         
     }
     
@@ -160,7 +183,6 @@ extension ATCentral:CBCentralManagerDelegate {
             return
         }
 
-//        device.registerPeripheralDelegate()
         device.peripheral.delegate = self
         device.peripheral.discoverServices(nil)
 
@@ -186,10 +208,6 @@ extension ATCentral:CBCentralManagerDelegate {
         
     }
     
-//    func centralManager(_ central: CBCentralManager, willRestoreState dict: [String : Any]) {
-//
-//    }
-    
     fileprivate func updateCBState(_ central: CBCentralManager) {
         
         switch central.state {
@@ -200,7 +218,6 @@ extension ATCentral:CBCentralManagerDelegate {
             state = ATCBState.Closed
             break
         case .poweredOn:
-            //do SomeThing
             state = ATCBState.Opened
         }
     }

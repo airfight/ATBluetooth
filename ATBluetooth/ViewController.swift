@@ -26,15 +26,24 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        tableView.frame = view.frame
         atBlueTooth = ATBlueTooth.default
         
-        sleep(5)
+        atBlueTooth.atCentral.delegate = self
+        atBlueTooth.atCentral.scanBlock = { () in
+            
+            self.atBlueTooth.atCentral.startScanForDevices()
+//            self.atBlueTooth.atCentral.startScanForDevices(advertisingWithServices: ["FFF0"])
+            
+        }
         
-        dataArr = atBlueTooth.atCentral.discoverPeripherals
-        tableView.backgroundColor = UIColor.red
+//        dataArr = atBlueTooth.atCentral.discoverPeripherals
+//        tableView.backgroundColor = UIColor.red
         if #available(iOS 11.0, *) {
             tableView.contentInsetAdjustmentBehavior = .never
         }
+        //解决iOS 10.3.1上方留白问题
+        self.automaticallyAdjustsScrollViewInsets = false
         
         tableView.tableFooterView = UIView()
         
@@ -50,8 +59,6 @@ class ViewController: UIViewController {
 //        device?.peripheral.writeValue(data1, for: (atBlueTooth.atCentral.configuration?.writeCharacteristic)!, type: CBCharacteristicWriteType.withResponse)
         
 //        tableView.register(<#T##cellClass: AnyClass?##AnyClass?#>, forCellReuseIdentifier: <#T##String#>)
-        
-        
         
     }
 
@@ -80,7 +87,6 @@ extension ViewController:UITableViewDelegate,UITableViewDataSource {
         let device = dataArr[indexPath.row]
         
         cell.reloadUI(device)
-        cell.backgroundColor = UIColor.blue
         return cell
     }
     
@@ -90,7 +96,12 @@ extension ViewController:UITableViewDelegate,UITableViewDataSource {
     
 }
 
-extension ViewController:ATBleDeviceStateDelegate {
+extension ViewController:ATBleDeviceStateDelegate,ATCentralDelegte {
+    
+    func didFoundATBleDevice(_ device: ATBleDevice) {
+        dataArr.append(device)
+    }
+    
     
     func updatedIfWriteSuccess(_ result: Result<Any>?) {
         
