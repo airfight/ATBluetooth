@@ -40,9 +40,9 @@ class ATCentral: NSObject {
         super.init()
         
         /// alter bluetooth state
-//        let options = [CBCentralManagerOptionShowPowerAlertKey:NSNumber.init(value: true),CBCentralManagerOptionRestoreIdentifierKey:"ATRestoreIdentifier"] as [String:Any]
+        let options = [CBCentralManagerOptionShowPowerAlertKey:NSNumber.init(value: true),CBCentralManagerScanOptionAllowDuplicatesKey:NSNumber.init(value: false)] as [String:Any]
         
-        centralManager = CBCentralManager(delegate: self, queue: dispatchQueue)
+        centralManager = CBCentralManager(delegate: self, queue: dispatchQueue,options:options)
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(applicationWillResignActive), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         
@@ -160,6 +160,7 @@ extension ATCentral:CBCentralManagerDelegate {
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         
         Print("discover peripheral:------\(peripheral.name ?? "nil")-----")
+        Print("advertisementData\(advertisementData.description)")
         // if CBPeripheral name is nil,untreated
         let device = ATBleDevice.init(peripheral, advertisementData: advertisementData, rssi: RSSI)
         
