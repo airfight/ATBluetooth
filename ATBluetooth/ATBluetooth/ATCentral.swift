@@ -93,7 +93,7 @@ class ATCentral: NSObject {
     
     public func connect(_ device:ATBleDevice?) {
         
-        guard connectedDevice?.peripheral != device?.peripheral else {
+        guard (connectedDevice?.peripheral != device?.peripheral || (device?.peripheral.state != .connected)) else {
             return
         }
         
@@ -161,7 +161,6 @@ extension ATCentral:CBCentralManagerDelegate {
         
         Print("discover peripheral:------\(peripheral.name ?? "nil")-----")
         // if CBPeripheral name is nil,untreated
-        
         let device = ATBleDevice.init(peripheral, advertisementData: advertisementData, rssi: RSSI)
         
         guard !discoverPeripherals.peripherals.contains(device.peripheral) else {
@@ -204,7 +203,8 @@ extension ATCentral:CBCentralManagerDelegate {
             return
         }
         
-        centralManager?.connect(peripheral, options: [CBConnectPeripheralOptionNotifyOnDisconnectionKey: NSNumber(value: true)])
+//        centralManager?.connect(peripheral, options: [CBConnectPeripheralOptionNotifyOnDisconnectionKey: NSNumber(value: true)])
+        connect(connectedDevice)
         
     }
     
@@ -284,10 +284,11 @@ extension ATCentral:CBPeripheralDelegate {
     ///Invoked when you discover the characteristics of a specified service.
     internal func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         
+        Print("service.characteristics\(service.characteristics?.count)")
+        
         for item: CBCharacteristic in service.characteristics! {
             
-            Print(item.uuid.uuidString)
-            
+            Print(item)
             //readCharacteristics
             if item.uuid.uuidString == configuration?.readServiceCharacteristicUUIDString {
                 

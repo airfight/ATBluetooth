@@ -30,6 +30,7 @@ class ATBleDevice: NSObject {
     internal var advertisementData:[String:Any]?
     internal var rssi:NSNumber?
     internal var configuration:ATConfiguration?
+    internal var state:ATBleDeviceState?
     public var delegate:ATBleDeviceStateDelegate?
     internal var serviceDelegate:ATCBPeripheralDelegate?
     
@@ -40,7 +41,7 @@ class ATBleDevice: NSObject {
         self.advertisementData = advertisementData
         self.rssi = RSSI
         serviceDelegate = ATCBPeripheralDelegate.init(peripheral)
-
+        analysisAdvertisementData()
     }
     
     internal func writeData(_ data:Data,type:ATCharacteristicWriteType = .withResponse) {
@@ -51,6 +52,33 @@ class ATBleDevice: NSObject {
         
         peripheral.writeValue(data, for: (configuration?.writeCharacteristic)!,type: (type == .withResponse ? CBCharacteristicWriteType.withResponse : CBCharacteristicWriteType.withoutResponse))
         
+    }
+    
+    internal func analysisAdvertisementData() {
+        
+        let adva1 = advertisementData?[CBAdvertisementDataLocalNameKey]
+        let adva2 = advertisementData?[CBAdvertisementDataManufacturerDataKey]
+        let adva3 = advertisementData?[CBAdvertisementDataServiceDataKey]
+        let adva4 = advertisementData?[CBAdvertisementDataServiceUUIDsKey]
+        let adva5 = advertisementData?[CBAdvertisementDataOverflowServiceUUIDsKey]
+        let adva6 = advertisementData?[CBAdvertisementDataTxPowerLevelKey]
+        let adva7 = advertisementData?[CBAdvertisementDataIsConnectable].debugDescription
+        let adva8 = advertisementData?[CBAdvertisementDataSolicitedServiceUUIDsKey]
+
+//        Print("CBAdvertisementDataLocalNameKey\(adva1)")
+//        Print("CBAdvertisementDataManufacturerDataKey\(adva2)")
+//        Print("CBAdvertisementDataServiceDataKey\(adva3)")
+//        Print("CBAdvertisementDataServiceUUIDsKey\(adva4)")
+//        Print("CBAdvertisementDataOverflowServiceUUIDsKey\(adva5)")
+//        Print("CBAdvertisementDataTxPowerLevelKey\(adva6)")
+//        Print("CBAdvertisementDataIsConnectable\(adva7)")
+//        Print("CBAdvertisementDataSolicitedServiceUUIDsKey\(adva8)")
+//        Print("CBAdvertisementDataTxPowerLevelKey\(adva1)")
+        
+    }
+    
+    override var description: String {
+        return "[\(String(describing: rssi ?? 0))db] " + ((advertisementData![CBAdvertisementDataIsConnectable]! as AnyObject).debugDescription == "1" ? "可连接" : "不可连接")
     }
     
     

@@ -58,6 +58,24 @@ public enum ATBleDeviceState {
     case Connected
     case Disconnect
     case ConnectFailed
+    
+    var description:String {
+        switch self {
+        case .Connected:
+            return "已连接"
+        case .Connecting:
+            return "连接中..."
+        case .ConnectFailed:
+            return "连接失败"
+        case .Disconnect:
+            return "已断开连接"
+        default:
+            return "未知"
+        }
+        
+        
+    }
+    
 }
 
 public enum ATCharacteristicWriteType{

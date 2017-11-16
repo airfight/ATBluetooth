@@ -28,7 +28,7 @@ class DeviceCell: UITableViewCell {
     func reloadUI(_ device:ATBleDevice) {
         
         nameLb.text = device.peripheral.name ?? "No name"
-        
+        contentLb.text = device.description
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

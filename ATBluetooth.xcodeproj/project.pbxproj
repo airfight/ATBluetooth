@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		682B1E5C1FBD69C600D129BF /* DeviceVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682B1E5B1FBD69C600D129BF /* DeviceVc.swift */; };
 		6842D1C51FBAECCA00D59813 /* ATConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6842D1C41FBAECCA00D59813 /* ATConfiguration.swift */; };
 		6886B2FB1FB5A5B600E03366 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6886B2FA1FB5A5B600E03366 /* AppDelegate.swift */; };
 		6886B2FD1FB5A5B600E03366 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6886B2FC1FB5A5B600E03366 /* ViewController.swift */; };
@@ -43,6 +44,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		682B1E5B1FBD69C600D129BF /* DeviceVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceVc.swift; sourceTree = "<group>"; };
 		6842D1C41FBAECCA00D59813 /* ATConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATConfiguration.swift; sourceTree = "<group>"; };
 		6886B2F71FB5A5B600E03366 /* ATBluetooth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ATBluetooth.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6886B2FA1FB5A5B600E03366 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 				6886B3281FB5A6DA00E03366 /* ATBluetooth */,
 				6886B2FA1FB5A5B600E03366 /* AppDelegate.swift */,
 				6886B2FC1FB5A5B600E03366 /* ViewController.swift */,
+				682B1E5B1FBD69C600D129BF /* DeviceVc.swift */,
 				68FAA1BC1FBC3D5700E42DCE /* DeviceCell.swift */,
 				68FAA1BD1FBC3D5700E42DCE /* DeviceCell.xib */,
 				6886B2FE1FB5A5B600E03366 /* Main.storyboard */,
@@ -299,6 +302,7 @@
 				68C1AE521FB979F90087B6C3 /* ATCBPeripheralDelegate.swift in Sources */,
 				6886B32E1FB5AD2F00E03366 /* Result.swift in Sources */,
 				68FAA1BE1FBC3D5700E42DCE /* DeviceCell.swift in Sources */,
+				682B1E5C1FBD69C600D129BF /* DeviceVc.swift in Sources */,
 				6842D1C51FBAECCA00D59813 /* ATConfiguration.swift in Sources */,
 				6886B2FB1FB5A5B600E03366 /* AppDelegate.swift in Sources */,
 				6886B32C1FB5ACE800E03366 /* ATConst.swift in Sources */,

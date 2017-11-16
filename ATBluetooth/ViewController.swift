@@ -15,6 +15,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     var atBlueTooth:ATBlueTooth!
+    var currentDevice:ATBleDevice?
     var dataArr:[ATBleDevice] = [] {
         
         didSet {
@@ -26,7 +27,6 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        tableView.frame = view.frame
         atBlueTooth = ATBlueTooth.default
         
         atBlueTooth.atCentral.delegate = self
@@ -90,38 +90,38 @@ extension ViewController:UITableViewDelegate,UITableViewDataSource {
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+            currentDevice = dataArr[indexPath.row]
+            self.performSegue(withIdentifier: "devicePushId", sender: nil)
+    }
+    
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
     }
     
 }
 
-extension ViewController:ATBleDeviceStateDelegate,ATCentralDelegte {
+extension ViewController:ATCentralDelegte {
     
     func didFoundATBleDevice(_ device: ATBleDevice) {
         dataArr.append(device)
     }
     
     
-    func updatedIfWriteSuccess(_ result: Result<Any>?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        guard result != nil else {
-            return
-        }
-        
-        switch result! {
-        case .Success(let value):
-            Print(value)
-        case .Failure(let error):
-            Print(error)
+        switch segue.identifier! {
+        case "devicePushId":
+            let vc = segue.destination as! DeviceVc
+            vc.device = currentDevice
+            break
+        default:
+            break
         }
         
     }
-    
-    func updatedATBleDeviceState(_ state: ATBleDeviceState, error: Error?) {
-        Print(state)
-    }
-    
     
 }
 
