@@ -185,6 +185,9 @@ extension ATCentral:CBCentralManagerDelegate {
 
         device.peripheral.delegate = self
         device.peripheral.discoverServices(nil)
+//        [peripheral discoverServices:@[[CBUUID UUIDWithString:@"180A"]]];
+        
+//        device.peripheral.discoverServices([CBUUID(string: "180A")])
 
         device.delegate?.updatedATBleDeviceState(.Connected, error: nil)
         
@@ -268,6 +271,7 @@ extension ATCentral:CBPeripheralDelegate {
             } else {
                 
                 peripheral.discoverCharacteristics(nil, for: service)
+//                peripheral.discoverCharacteristics([CBUUID(string: "180A")], for: service)
                 
             }
             

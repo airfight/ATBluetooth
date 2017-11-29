@@ -27,6 +27,7 @@ protocol ATBleDeviceStateDelegate {
 class ATBleDevice: NSObject {
     
     internal var peripheral:CBPeripheral!
+    internal var uuid:UUID?
     internal var advertisementData:[String:Any]?
     internal var rssi:NSNumber?
     internal var configuration:ATConfiguration?
