@@ -15,9 +15,17 @@
 
 import UIKit
 
-class ATBlueTooth: NSObject {
+class ATBlueTooth: ATBlueToothSuper {
     
-    var atCentral:ATCentral!
+    private var atCentral:ATCentral!
+    public var centerManangerDelegate:ATCentralDelegte? {
+        
+        didSet {
+            atCentral.delegate = centerManangerDelegate
+        }
+        
+    }
+    
     open static let `default`: ATBlueTooth = {
         
         return ATBlueTooth()
@@ -27,6 +35,24 @@ class ATBlueTooth: NSObject {
         super.init()
         atCentral = ATCentral()
     }
+    
+    func startScanForDevices() {
+        
+        atCentral.scanBlock = { [weak self]() in
+            
+           self?.atCentral.startScanForDevices()
+            
+        }
 
+    }
+    
+    func connect(_ device:ATBleDevice?) {
+     
+        atCentral.connect(device)
+    }
+    
+    
+    
+    
 
 }

@@ -65,6 +65,12 @@ class ATCentral: NSObject {
         centralManager?.stopScan()
     }
     
+    public func getPerperh() {
+        
+        let perhial = centralManager?.retrievePeripherals(withIdentifiers: [UUID(uuidString: "")!])
+        
+    }
+    
     public func disconnectDevice() {
         
         guard let device = connectedDevice else {

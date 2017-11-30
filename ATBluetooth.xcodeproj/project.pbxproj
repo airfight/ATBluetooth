@@ -22,6 +22,8 @@
 		6886B3301FB5AF9300E03366 /* ATBleDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6886B32F1FB5AF9300E03366 /* ATBleDevice.swift */; };
 		68C1AE521FB979F90087B6C3 /* ATCBPeripheralDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C1AE511FB979F90087B6C3 /* ATCBPeripheralDelegate.swift */; };
 		68C1AE551FB98EEE0087B6C3 /* ATBlueTooth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C1AE541FB98EEE0087B6C3 /* ATBlueTooth.swift */; };
+		68E292421FCF939500F03AC4 /* ATTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68E292411FCF939500F03AC4 /* ATTools.swift */; };
+		68E292441FCFD99200F03AC4 /* ATBlueToothSuper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68E292431FCFD99200F03AC4 /* ATBlueToothSuper.swift */; };
 		68FAA1BE1FBC3D5700E42DCE /* DeviceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68FAA1BC1FBC3D5700E42DCE /* DeviceCell.swift */; };
 		68FAA1BF1FBC3D5700E42DCE /* DeviceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 68FAA1BD1FBC3D5700E42DCE /* DeviceCell.xib */; };
 /* End PBXBuildFile section */
@@ -65,6 +67,8 @@
 		6886B32F1FB5AF9300E03366 /* ATBleDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATBleDevice.swift; sourceTree = "<group>"; };
 		68C1AE511FB979F90087B6C3 /* ATCBPeripheralDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATCBPeripheralDelegate.swift; sourceTree = "<group>"; };
 		68C1AE541FB98EEE0087B6C3 /* ATBlueTooth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATBlueTooth.swift; sourceTree = "<group>"; };
+		68E292411FCF939500F03AC4 /* ATTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATTools.swift; sourceTree = "<group>"; };
+		68E292431FCFD99200F03AC4 /* ATBlueToothSuper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATBlueToothSuper.swift; sourceTree = "<group>"; };
 		68FAA1BC1FBC3D5700E42DCE /* DeviceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceCell.swift; sourceTree = "<group>"; };
 		68FAA1BD1FBC3D5700E42DCE /* DeviceCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DeviceCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -157,7 +161,9 @@
 				6886B32D1FB5AD2F00E03366 /* Result.swift */,
 				6886B32B1FB5ACE800E03366 /* ATConst.swift */,
 				6886B3291FB5A72500E03366 /* ATCentral.swift */,
+				68E292411FCF939500F03AC4 /* ATTools.swift */,
 				6886B32F1FB5AF9300E03366 /* ATBleDevice.swift */,
+				68E292431FCFD99200F03AC4 /* ATBlueToothSuper.swift */,
 				68C1AE541FB98EEE0087B6C3 /* ATBlueTooth.swift */,
 			);
 			path = ATBluetooth;
@@ -304,6 +310,8 @@
 				68FAA1BE1FBC3D5700E42DCE /* DeviceCell.swift in Sources */,
 				682B1E5C1FBD69C600D129BF /* DeviceVc.swift in Sources */,
 				6842D1C51FBAECCA00D59813 /* ATConfiguration.swift in Sources */,
+				68E292421FCF939500F03AC4 /* ATTools.swift in Sources */,
+				68E292441FCFD99200F03AC4 /* ATBlueToothSuper.swift in Sources */,
 				6886B2FB1FB5A5B600E03366 /* AppDelegate.swift in Sources */,
 				6886B32C1FB5ACE800E03366 /* ATConst.swift in Sources */,
 				6886B3301FB5AF9300E03366 /* ATBleDevice.swift in Sources */,

@@ -23,7 +23,7 @@ class DeviceVc: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        ATBlueTooth.default.atCentral.connect(device)
+        ATBlueTooth.default.connect(device)
         
         device?.delegate = self
         self.title = (device?.peripheral.state == .connected ? "已连接" : "未知状态")

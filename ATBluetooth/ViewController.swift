@@ -9,8 +9,6 @@
 import UIKit
 
 class ViewController: UIViewController {
-
-    
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -29,20 +27,13 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         atBlueTooth = ATBlueTooth.default
         
-        atBlueTooth.atCentral.delegate = self
-        atBlueTooth.atCentral.scanBlock = { () in
-            
-            self.atBlueTooth.atCentral.startScanForDevices()
-//            self.atBlueTooth.atCentral.startScanForDevices(advertisingWithServices: ["FFF0"])
-            
-        }
+        atBlueTooth.centerManangerDelegate = self
+        atBlueTooth.startScanForDevices()
         
-//        dataArr = atBlueTooth.atCentral.discoverPeripherals
-//        tableView.backgroundColor = UIColor.red
         if #available(iOS 11.0, *) {
             tableView.contentInsetAdjustmentBehavior = .never
         }
-        //解决iOS 10.3.1上方留白问题
+        //解决iOS 10.3.1上方留白问题 iOS 7.0问题
         self.automaticallyAdjustsScrollViewInsets = false
         
         tableView.tableFooterView = UIView()
@@ -120,7 +111,6 @@ extension ViewController:ATCentralDelegte {
         default:
             break
         }
-        
     }
     
 }
