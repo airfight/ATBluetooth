@@ -25,6 +25,18 @@ class ATBlueToothContext: NSObject {
         }
     }
     
+    public var defalut: ATBlueToothContext {
+        
+        struct Sigleton {
+            static let instance = ATBlueToothContext()
+        }
+        return Sigleton.instance
+    }
+    
+    override init() {
+        super.init()
+    }
+    
     init(_ mode:PeripheralMode) {
         super.init()
         switch mode {
@@ -41,6 +53,10 @@ class ATBlueToothContext: NSObject {
     
     func startScanForDevices() {
         atsuper.startScanForDevices()
+    }
+    
+    func connect(_ device:ATBleDevice?) {
+        atsuper.connect(device)
     }
   
 }

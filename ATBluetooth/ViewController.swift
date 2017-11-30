@@ -31,6 +31,7 @@ class ViewController: UIViewController {
 //        atBlueTooth.startScanForDevices()
         
         atBlueTooth = ATBlueToothContext.init(PeripheralMode.CenteMode)
+//        atBlueTooth = ATBlueToothContext.shareInstance(PeripheralMode.CenteMode)
         atBlueTooth.delegate = self
         atBlueTooth.startScanForDevices()
         if #available(iOS 11.0, *) {
@@ -87,6 +88,7 @@ extension ViewController:UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
             currentDevice = dataArr[indexPath.row]
+            atBlueTooth.connect(currentDevice)
             self.performSegue(withIdentifier: "devicePushId", sender: nil)
     }
     
@@ -98,11 +100,11 @@ extension ViewController:UITableViewDelegate,UITableViewDataSource {
 }
 
 extension ViewController:ATCentralDelegte {
+
     
     func didFoundATBleDevice(_ device: ATBleDevice) {
         dataArr.append(device)
     }
-    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
