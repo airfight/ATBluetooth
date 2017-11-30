@@ -16,7 +16,7 @@
 import UIKit
 import CoreBluetooth
 
-protocol ATCentralDelegte {
+protocol ATCentralDelegte:ATContextDelegate {
      func didFoundATBleDevice(_ device:ATBleDevice)
 }
 

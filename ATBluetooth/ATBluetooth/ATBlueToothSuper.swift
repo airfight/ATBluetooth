@@ -25,4 +25,15 @@ class ATBlueToothSuper: NSObject {
         return Sigleton.instance
     }
     
+    var delegate:ATContextDelegate?
+
+    
+    //implents
+    func startScanForDevices() {
+        
+    }
+    
+    func connect(_ device:ATBleDevice?){
+        
+    }
 }

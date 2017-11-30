@@ -12,7 +12,7 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    var atBlueTooth:ATBlueTooth!
+    var atBlueTooth:ATBlueToothContext!
     var currentDevice:ATBleDevice?
     var dataArr:[ATBleDevice] = [] {
         
@@ -25,11 +25,14 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        atBlueTooth = ATBlueTooth.default
+//        atBlueTooth = ATBlueTooth.default
+//
+//        atBlueTooth.centerManangerDelegate = self
+//        atBlueTooth.startScanForDevices()
         
-        atBlueTooth.centerManangerDelegate = self
+        atBlueTooth = ATBlueToothContext.init(PeripheralMode.CenteMode)
+        atBlueTooth.delegate = self
         atBlueTooth.startScanForDevices()
-        
         if #available(iOS 11.0, *) {
             tableView.contentInsetAdjustmentBehavior = .never
         }

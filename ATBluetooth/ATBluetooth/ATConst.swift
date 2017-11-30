@@ -52,6 +52,15 @@ public enum ATCBState {
     
 }
 
+public enum PeripheralMode {
+    case CenteMode
+    case PeripheralMode
+}
+
+public protocol ATContextDelegate {
+    
+}
+
 public enum ATBleDeviceState {
     
     case Connecting
