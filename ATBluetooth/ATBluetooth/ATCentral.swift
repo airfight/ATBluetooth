@@ -16,9 +16,7 @@
 import UIKit
 import CoreBluetooth
 
-protocol ATCentralDelegte:ATContextDelegate {
-     func didFoundATBleDevice(_ device:ATBleDevice)
-}
+
 
 typealias bleStartScan = () -> Void
 

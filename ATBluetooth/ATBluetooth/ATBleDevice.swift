@@ -16,13 +16,7 @@
 import UIKit
 import CoreBluetooth
 
-protocol ATBleDeviceStateDelegate {
-    
-   
-    func updatedATBleDeviceState(_ state:ATBleDeviceState,error:Error?)
-    func updatedIfWriteSuccess(_ result:Result<Any>?)
-    
-}
+
 
 class ATBleDevice: NSObject {
     

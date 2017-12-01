@@ -17,11 +17,11 @@ import UIKit
 
 class ATBlueToothContext: NSObject {
     
-    private var atsuper:ATBlueToothSuper!
+    private var atsuper:ATBlueToothSuper?
     
     var delegate:ATContextDelegate? {
         didSet {
-            atsuper.delegate = delegate
+            atsuper?.delegate = delegate
         }
     }
     
@@ -48,17 +48,17 @@ class ATBlueToothContext: NSObject {
     
     func startScanForDevices() {
 //        assert(atsuper == nil, "please implment config(_:)")
-        atsuper.startScanForDevices()
+        atsuper?.startScanForDevices()
     }
     
     func connect(_ device:ATBleDevice?) {
 //        assert(atsuper == nil, "please implment config(_:)")
-        atsuper.connect(device)
+        atsuper?.connect(device)
     }
     
     func disconnectDevice() {
 //        assert(atsuper == nil, "please implment config(_:)")
-        atsuper.disconnectDevice(nil)
+        atsuper?.disconnectDevice(nil)
     }
   
 }

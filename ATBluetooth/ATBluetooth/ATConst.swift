@@ -57,9 +57,7 @@ public enum PeripheralMode {
     case PeripheralMode
 }
 
-public protocol ATContextDelegate {
-    
-}
+
 
 public enum ATBleDeviceState {
     
