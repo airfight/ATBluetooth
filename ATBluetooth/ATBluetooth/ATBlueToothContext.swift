@@ -25,7 +25,7 @@ class ATBlueToothContext: NSObject {
         }
     }
     
-    public var defalut: ATBlueToothContext {
+    open static var `default`: ATBlueToothContext {
         
         struct Sigleton {
             static let instance = ATBlueToothContext()
@@ -33,12 +33,7 @@ class ATBlueToothContext: NSObject {
         return Sigleton.instance
     }
     
-    override init() {
-        super.init()
-    }
-    
-    init(_ mode:PeripheralMode) {
-        super.init()
+    public func confing(_ mode:PeripheralMode) {
         switch mode {
             
         case .CenteMode:
