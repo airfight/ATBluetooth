@@ -26,7 +26,6 @@ class ATBlueToothSuper: NSObject {
     }
     
     var delegate:ATContextDelegate?
-
     
     //implents
     func startScanForDevices() {

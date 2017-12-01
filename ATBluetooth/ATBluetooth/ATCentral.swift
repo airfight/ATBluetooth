@@ -170,7 +170,7 @@ extension ATCentral:CBCentralManagerDelegate {
         // if CBPeripheral name is nil,untreated
         let device = ATBleDevice.init(peripheral, advertisementData: advertisementData, rssi: RSSI)
         
-        guard !discoverPeripherals.peripherals.contains(device.peripheral) else {
+        guard !discoverPeripherals.uuidStrings.contains(device.peripheral.identifier.uuidString) else {
             return
         }
         
@@ -391,8 +391,8 @@ extension Collection where Iterator.Element == String {
 }
 
 extension Collection where Iterator.Element == ATBleDevice {
-    var peripherals:[CBPeripheral] {
-        return self.map{$0.peripheral}
+    var uuidStrings:[String] {
+        return self.map{$0.peripheral.identifier.uuidString}
     }
 }
 
