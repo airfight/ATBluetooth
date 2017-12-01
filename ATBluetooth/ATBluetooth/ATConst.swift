@@ -38,7 +38,6 @@ public enum ATCBError:Error {
     }
 }
 
-
 /// CB State
 ///
 /// - Open:
@@ -76,8 +75,7 @@ public enum ATBleDeviceState {
             return "连接失败"
         case .Disconnect:
             return "已断开连接"
-//        default:
-//            return "未知"
+
         }
         
         
