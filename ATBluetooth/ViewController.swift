@@ -31,8 +31,7 @@ class ViewController: UIViewController {
 //        atBlueTooth.startScanForDevices()
         
         atBlueTooth = ATBlueToothContext.default
-//        atBlueTooth.confing(.CenteMode)
-//        atBlueTooth = ATBlueToothContext.shareInstance(PeripheralMode.CenteMode)
+        atBlueTooth.confing(.CenteMode)
         atBlueTooth.delegate = self
         atBlueTooth.startScanForDevices()
         if #available(iOS 11.0, *) {

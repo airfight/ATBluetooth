@@ -18,7 +18,7 @@ import CoreBluetooth
 
 /// 是否输出打印
 
-let IFLOG = 1
+var IFLOG:Bool = true
 
 public func Print<T>(_ message: T,file: String = #file,method: String = #function, line: Int = #line)
 {

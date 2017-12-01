@@ -91,7 +91,28 @@
                     <view key="view" contentMode="scaleToFill" id="lUd-7e-Kwm">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="请输入发送的内容" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9ra-Am-uJV">
+                                <rect key="frame" x="119.5" y="164" width="136" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Am6-DC-Bgm">
+                                <rect key="frame" x="171.5" y="244" width="31" height="30"/>
+                                <state key="normal" title="发送"/>
+                                <connections>
+                                    <action selector="sendAction:" destination="GPC-fm-o3i" eventType="touchUpInside" id="rU5-3y-F7X"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="9ra-Am-uJV" firstAttribute="top" secondItem="pcc-aB-4TY" secondAttribute="top" constant="100" id="481-4s-6DT"/>
+                            <constraint firstItem="9ra-Am-uJV" firstAttribute="centerX" secondItem="pcc-aB-4TY" secondAttribute="centerX" id="I1C-fG-QXM"/>
+                            <constraint firstItem="Am6-DC-Bgm" firstAttribute="centerX" secondItem="pcc-aB-4TY" secondAttribute="centerX" id="RdQ-Lu-2GB"/>
+                            <constraint firstItem="Am6-DC-Bgm" firstAttribute="top" secondItem="9ra-Am-uJV" secondAttribute="bottom" constant="50" id="o6F-ga-UFf"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="pcc-aB-4TY"/>
                     </view>
                     <navigationItem key="navigationItem" id="4nm-eA-gUJ"/>

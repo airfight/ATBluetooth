@@ -24,9 +24,10 @@ class DeviceVc: UIViewController {
         super.viewDidLoad()
         
         ATBlueToothContext.default.connect(device)
-        device?.delegate = self
 //        self.title = (device?.peripheral.state == .connected ? "已连接" : "未知状态")
-        self.title = "未知"
+        self.title = "你最帅"
+        device?.delegate = self
+
     }
     //MARK: - Override
     
@@ -39,6 +40,14 @@ class DeviceVc: UIViewController {
     
     //MARK: - Target Methods
     
+    @IBAction func sendAction(_ sender: UIButton) {
+        
+        
+        let data = Data.init(bytes: [0x12])
+        
+        device?.writeData(data)
+        
+    }
     
     //MARK: - Notification Methods
     
@@ -105,9 +114,9 @@ extension DeviceVc:ATBleDeviceStateDelegate {
         
         DispatchQueue.main.async {
             
-            self.title = state.description
+            self.title = "\(state.description)"
             
-            print(state.description)
+            Print(state.description)
             
         }
         

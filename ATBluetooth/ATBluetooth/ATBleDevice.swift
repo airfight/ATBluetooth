@@ -48,17 +48,18 @@ class ATBleDevice: NSObject {
     
     internal func writeData(_ data:Data,type:ATCharacteristicWriteType = .withResponse) {
         
-        guard configuration != nil else {
-            return
-        }
-        
-        peripheral.writeValue(data, for: (configuration?.writeCharacteristic)!,type: (type == .withResponse ? CBCharacteristicWriteType.withResponse : CBCharacteristicWriteType.withoutResponse))
+//        guard configuration != nil else {
+//            return
+//        }
+        let charactert = peripheral.services?.filter{$0.uuid.uuidString == peripheral.identifier.uuidString}.first?.characteristics?.filter{$0.uuid.uuidString == "FFF1"}.first
+        peripheral.writeValue(data, for: charactert!,type: (type == .withResponse ? CBCharacteristicWriteType.withResponse : CBCharacteristicWriteType.withoutResponse))
+//        peripheral.writeValue(data, for: (configuration?.writeCharacteristic)!,type: (type == .withResponse ? CBCharacteristicWriteType.withResponse : CBCharacteristicWriteType.withoutResponse))
         
     }
     
     internal func analysisAdvertisementData() {
         
-        let adva1 = advertisementData?[CBAdvertisementDataLocalNameKey]
+     /*   let adva1 = advertisementData?[CBAdvertisementDataLocalNameKey]
         let adva2 = advertisementData?[CBAdvertisementDataManufacturerDataKey]
         let adva3 = advertisementData?[CBAdvertisementDataServiceDataKey]
         let adva4 = advertisementData?[CBAdvertisementDataServiceUUIDsKey]
@@ -67,16 +68,16 @@ class ATBleDevice: NSObject {
         let adva7 = advertisementData?[CBAdvertisementDataIsConnectable].debugDescription
         let adva8 = advertisementData?[CBAdvertisementDataSolicitedServiceUUIDsKey]
 
-//        Print("CBAdvertisementDataLocalNameKey\(adva1)")
-//        Print("CBAdvertisementDataManufacturerDataKey\(adva2)")
-//        Print("CBAdvertisementDataServiceDataKey\(adva3)")
-//        Print("CBAdvertisementDataServiceUUIDsKey\(adva4)")
-//        Print("CBAdvertisementDataOverflowServiceUUIDsKey\(adva5)")
-//        Print("CBAdvertisementDataTxPowerLevelKey\(adva6)")
-//        Print("CBAdvertisementDataIsConnectable\(adva7)")
-//        Print("CBAdvertisementDataSolicitedServiceUUIDsKey\(adva8)")
-//        Print("CBAdvertisementDataTxPowerLevelKey\(adva1)")
-        
+        Print("CBAdvertisementDataLocalNameKey\(adva1)")
+        Print("CBAdvertisementDataManufacturerDataKey\(adva2)")
+        Print("CBAdvertisementDataServiceDataKey\(adva3)")
+        Print("CBAdvertisementDataServiceUUIDsKey\(adva4)")
+        Print("CBAdvertisementDataOverflowServiceUUIDsKey\(adva5)")
+        Print("CBAdvertisementDataTxPowerLevelKey\(adva6)")
+        Print("CBAdvertisementDataIsConnectable\(adva7)")
+        Print("CBAdvertisementDataSolicitedServiceUUIDsKey\(adva8)")
+        Print("CBAdvertisementDataTxPowerLevelKey\(adva1)")
+        */
     }
     
     override var description: String {
