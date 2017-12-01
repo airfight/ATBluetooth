@@ -25,8 +25,8 @@ class DeviceVc: UIViewController {
         
         ATBlueToothContext.default.connect(device)
         device?.delegate = self
-        self.title = (device?.peripheral.state == .connected ? "已连接" : "未知状态")
-        
+//        self.title = (device?.peripheral.state == .connected ? "已连接" : "未知状态")
+        self.title = "未知"
     }
     //MARK: - Override
     

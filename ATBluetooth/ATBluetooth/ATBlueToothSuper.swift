@@ -36,4 +36,8 @@ class ATBlueToothSuper: NSObject {
     func connect(_ device:ATBleDevice?){
         
     }
+    
+    func disconnectDevice(_ device:ATBleDevice?) {
+        
+    }
 }

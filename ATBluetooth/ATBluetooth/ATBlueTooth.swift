@@ -50,5 +50,10 @@ class ATBlueTooth: ATBlueToothSuper {
         atCentral.connect(device)
     }
     
+    override func disconnectDevice(_ device: ATBleDevice?) {
+        super.disconnectDevice(device)
+        atCentral.disconnectDevice()
+    }
+    
 
 }

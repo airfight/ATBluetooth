@@ -31,7 +31,7 @@ class ViewController: UIViewController {
 //        atBlueTooth.startScanForDevices()
         
         atBlueTooth = ATBlueToothContext.default
-        atBlueTooth.confing(.CenteMode)
+//        atBlueTooth.confing(.CenteMode)
 //        atBlueTooth = ATBlueToothContext.shareInstance(PeripheralMode.CenteMode)
         atBlueTooth.delegate = self
         atBlueTooth.startScanForDevices()
@@ -88,10 +88,10 @@ extension ViewController:UITableViewDelegate,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+            atBlueTooth.disconnectDevice()
             currentDevice = dataArr[indexPath.row]
             self.performSegue(withIdentifier: "devicePushId", sender: nil)
     }
-    
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
