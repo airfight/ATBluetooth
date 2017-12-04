@@ -27,10 +27,11 @@ class ATBlueTooth: ATBlueToothSuper {
     }
     
     open static let `default`: ATBlueTooth = {
-        
+
         return ATBlueTooth()
     }()
     
+
     override init() {
         super.init()
         atCentral = ATCentral()

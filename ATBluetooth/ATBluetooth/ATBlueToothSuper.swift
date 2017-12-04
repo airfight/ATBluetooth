@@ -17,6 +17,10 @@ import UIKit
 
 class ATBlueToothSuper: NSObject {
 
+    private struct atassociatedKeys {
+        static var sigletonKey = "sigletonKey"
+    }
+    
     public var defalut: ATBlueToothSuper {
         
         struct Sigleton {
@@ -24,6 +28,17 @@ class ATBlueToothSuper: NSObject {
         }
         return Sigleton.instance
     }
+
+//    open static var `default`:ATBlueToothSuper {
+//
+//        var instance = objc_getAssociatedObject(self, &atassociatedKeys.sigletonKey)
+//
+//        if instance == nil {
+//            instance = ATBlueToothSuper()
+//            objc_setAssociatedObject(self, &atassociatedKeys.sigletonKey, instance, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+//        }
+//        return instance as! ATBlueToothSuper
+//    }
     
     var delegate:ATContextDelegate?
     
