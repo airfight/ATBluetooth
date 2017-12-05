@@ -54,4 +54,8 @@ class ATBlueToothSuper: NSObject {
     func disconnectDevice(_ device:ATBleDevice?) {
         
     }
+    
+    func reconnectDevice(_ uuidString:String?) {
+        
+    }
 }

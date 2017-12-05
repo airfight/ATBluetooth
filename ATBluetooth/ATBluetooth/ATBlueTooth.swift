@@ -17,11 +17,11 @@ import UIKit
 
 class ATBlueTooth: ATBlueToothSuper {
     
-    private var atCentral:ATCentral!
+    private var atCentral:ATCentral?
     override var delegate:ATContextDelegate? {
         
         didSet {
-            atCentral.delegate = delegate as? ATCentralDelegte
+            atCentral?.delegate = delegate as? ATCentralDelegte
         }
         
     }
@@ -39,21 +39,26 @@ class ATBlueTooth: ATBlueToothSuper {
     
     override func startScanForDevices() {
         super.startScanForDevices()
-        atCentral.scanBlock = { [weak self]() in
+        atCentral?.scanBlock = { [weak self]() in
             
-           self?.atCentral.startScanForDevices()
+            self?.atCentral?.startScanForDevices()
             
         }
     }
     
     override func connect(_ device:ATBleDevice?) {
         super.connect(device)
-        atCentral.connect(device)
+        atCentral?.connect(device)
     }
     
     override func disconnectDevice(_ device: ATBleDevice?) {
         super.disconnectDevice(device)
-        atCentral.disconnectDevice()
+        atCentral?.disconnectDevice()
+    }
+    
+    override func reconnectDevice(_ uuidString:String?) {
+        
+        atCentral?.reconnectDevice(uuidString)
     }
     
 

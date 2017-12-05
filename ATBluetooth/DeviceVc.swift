@@ -42,10 +42,22 @@ class DeviceVc: UIViewController {
     
     @IBAction func sendAction(_ sender: UIButton) {
         
-        
-        let data = Data.init(bytes: [0x12])
-        
-        device?.writeData(data)
+        switch sender.tag {
+        case 666:
+            let data = Data.init(bytes: [0x12])
+            
+            device?.writeData(data)
+            break
+        case 777:
+             ATBlueToothContext.default.disconnectDevice()
+            break
+        case 888:
+            ATBlueToothContext.default.reconnectDevice(device?.uuid)
+            break
+        default:
+            break
+        }
+  
         
     }
     

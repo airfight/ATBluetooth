@@ -56,9 +56,14 @@ class ATBlueToothContext: NSObject {
         atsuper?.connect(device)
     }
     
-    func disconnectDevice() {
+    func disconnectDevice(_ device:ATBleDevice? = nil) {
 //        assert(atsuper == nil, "please implment config(_:)")
-        atsuper?.disconnectDevice(nil)
+        atsuper?.disconnectDevice(device)
     }
-  
+    
+    func reconnectDevice(_ uuidString:String?) {
+     
+        atsuper?.reconnectDevice(uuidString)
+    }
+    
 }

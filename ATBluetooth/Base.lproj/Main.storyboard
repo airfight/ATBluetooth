@@ -98,11 +98,27 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Am6-DC-Bgm">
+                            <button opaque="NO" tag="666" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Am6-DC-Bgm">
                                 <rect key="frame" x="171.5" y="244" width="31" height="30"/>
                                 <state key="normal" title="发送"/>
                                 <connections>
                                     <action selector="sendAction:" destination="GPC-fm-o3i" eventType="touchUpInside" id="rU5-3y-F7X"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="777" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V2S-jD-aFG">
+                                <rect key="frame" x="93" y="506" width="46" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="断开"/>
+                                <connections>
+                                    <action selector="sendAction:" destination="GPC-fm-o3i" eventType="touchUpInside" id="Eaq-eG-09G"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="888" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e29-uc-iPt">
+                                <rect key="frame" x="220" y="506" width="46" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="重连"/>
+                                <connections>
+                                    <action selector="sendAction:" destination="GPC-fm-o3i" eventType="touchUpInside" id="yNx-wl-iGt"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -119,7 +135,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nG3-bh-y3a" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1225" y="690"/>
+            <point key="canvasLocation" x="1224.8" y="689.5052473763119"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="oEw-Mw-HGN">

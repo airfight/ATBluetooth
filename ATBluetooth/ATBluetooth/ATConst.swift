@@ -64,7 +64,6 @@ public enum ATBleDeviceState {
     case Connected
     case Disconnect
     case ConnectFailed
-    
     var description:String {
         switch self {
         case .Connected:
@@ -77,7 +76,6 @@ public enum ATBleDeviceState {
             return "已断开连接"
 
         }
-        
         
     }
     

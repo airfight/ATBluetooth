@@ -69,21 +69,7 @@ class ATCentral: NSObject {
         
     }
     
-    public func disconnectDevice() {
-        
-        guard let device = connectedDevice else {
-            return
-        }
-        
-        if device.peripheral.state != .connected  {
-            return
-        }
-        
-        centralManager?.cancelPeripheralConnection(device.peripheral)
-        
-        device.delegate?.updatedATBleDeviceState(.Disconnect, error: nil)
-        
-    }
+  
     
     @objc public func startScanPeripherals() {
         
@@ -118,7 +104,51 @@ class ATCentral: NSObject {
         
         connectedDevice?.delegate?.updatedATBleDeviceState(.Connecting,error:nil)
 
-        centralManager?.connect(peripheral, options: [CBConnectPeripheralOptionNotifyOnDisconnectionKey: NSNumber(value: true)])
+        centralManager?.connect(peripheral, options: [CBConnectPeripheralOptionNotifyOnDisconnectionKey: NSNumber(value: false)])
+        
+    }
+    
+    public func disconnectDevice() {
+        
+        guard let device = connectedDevice else {
+            return
+        }
+        
+        if device.peripheral.state != .connected  {
+            return
+        }
+        
+        centralManager?.cancelPeripheralConnection(device.peripheral)
+        
+        device.delegate?.updatedATBleDeviceState(.Disconnect, error: nil)
+        
+    }
+    
+    public func reconnectDevice(_ uuidString:String?) {
+
+        guard uuidString != nil else {
+            assert(true, "reconnectDevice uuidString cannot be nil")
+            return
+        }
+        
+        let periPherals = centralManager?.retrievePeripherals(withIdentifiers: [UUID(uuidString: uuidString!)!])
+        
+        if let periPheralArr = periPherals {
+            
+            guard periPheralArr.count > 0  else {
+                assert(true, "reconnectDevice cannot find periPherals")
+                return
+            }
+            
+            guard periPheralArr.first?.state ==  CBPeripheralState.disconnected else {
+                Print(periPheralArr.first?.state)
+                Print("isConnecting or Connected")
+                return
+            }
+            
+            centralManager?.connect(periPheralArr.first!, options: nil)
+            
+        }
         
     }
     
@@ -212,7 +242,7 @@ extension ATCentral:CBCentralManagerDelegate {
         }
         
 //        centralManager?.connect(peripheral, options: [CBConnectPeripheralOptionNotifyOnDisconnectionKey: NSNumber(value: true)])
-        connect(connectedDevice)
+//        connect(connectedDevice)
         
     }
     
@@ -294,6 +324,11 @@ extension ATCentral:CBPeripheralDelegate {
     internal func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         
         Print("service.characteristics\(service.characteristics?.count)")
+        
+        guard service.characteristics != nil else {
+            
+            return
+        }
         
         for item: CBCharacteristic in service.characteristics! {
             
