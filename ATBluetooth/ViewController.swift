@@ -88,6 +88,7 @@ extension ViewController:UITableViewDelegate,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+            //same device Don't need to disconnect
             atBlueTooth.disconnectDevice()
             currentDevice = dataArr[indexPath.row]
             self.performSegue(withIdentifier: "devicePushId", sender: nil)

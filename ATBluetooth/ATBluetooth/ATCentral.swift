@@ -83,44 +83,58 @@ class ATCentral: NSObject {
     
     public func connect(_ device:ATBleDevice?) {
         
-        guard (connectedDevice?.peripheral != device?.peripheral || (device?.peripheral.state != .connected)) else {
+        guard (connectedDevice?.peripheral.identifier.uuidString != device?.peripheral.identifier.uuidString || (device?.peripheral.state != .connected)) else {
             return
         }
         
-        if let oldDevice = connectedDevice {
-            
-            centralManager?.cancelPeripheralConnection(oldDevice.peripheral)
-        }
-        
+//        if let oldDevice = connectedDevice {
+//
+//            guard device?.peripheral.identifier.uuidString == oldDevice.peripheral.identifier.uuidString else {
+//                return
+//            }
+//        }
         connectedDevice = device
         connectedDevice?.configuration = configuration
         guard let peripheral = connectedDevice?.peripheral else {
             return
         }
-        
-        guard peripheral.state == .disconnected else {
+//        disconnecting
+        guard peripheral.state != .connected else {
             return
         }
         
         connectedDevice?.delegate?.updatedATBleDeviceState(.Connecting,error:nil)
 
-        centralManager?.connect(peripheral, options: [CBConnectPeripheralOptionNotifyOnDisconnectionKey: NSNumber(value: false)])
+        centralManager?.connect(peripheral, options: nil)
         
     }
     
-    public func disconnectDevice() {
+    public func disconnectDevice(_ device: ATBleDevice?) {
         
-        guard let device = connectedDevice else {
-            return
+        if device == nil {
+ 
+            guard let currentdevice = connectedDevice else {
+                return
+            }
+            
+            if currentdevice.peripheral.state != .connected  {
+                return
+            }
+            
+            centralManager?.cancelPeripheralConnection(currentdevice.peripheral)
+            
+            currentdevice.delegate?.updatedATBleDeviceState(.Disconnect, error: nil)
+        } else {
+            
+            if device?.peripheral.state != .connected  {
+                return
+            }
+            
+            centralManager?.cancelPeripheralConnection((device?.peripheral)!)
+            
+            device?.delegate?.updatedATBleDeviceState(.Disconnect, error: nil)
+            
         }
-        
-        if device.peripheral.state != .connected  {
-            return
-        }
-        
-        centralManager?.cancelPeripheralConnection(device.peripheral)
-        
-        device.delegate?.updatedATBleDeviceState(.Disconnect, error: nil)
         
     }
     
@@ -241,8 +255,9 @@ extension ATCentral:CBCentralManagerDelegate {
             return
         }
         
-//        centralManager?.connect(peripheral, options: [CBConnectPeripheralOptionNotifyOnDisconnectionKey: NSNumber(value: true)])
-//        connect(connectedDevice)
+        if atbleCanreconnect {
+            connect(connectedDevice)
+        }
         
     }
     

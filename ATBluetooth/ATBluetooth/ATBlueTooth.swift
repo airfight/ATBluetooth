@@ -53,11 +53,11 @@ class ATBlueTooth: ATBlueToothSuper {
     
     override func disconnectDevice(_ device: ATBleDevice?) {
         super.disconnectDevice(device)
-        atCentral?.disconnectDevice()
+        atCentral?.disconnectDevice(device)
     }
     
     override func reconnectDevice(_ uuidString:String?) {
-        
+        super.reconnectDevice(uuidString)
         atCentral?.reconnectDevice(uuidString)
     }
     

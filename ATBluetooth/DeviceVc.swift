@@ -23,10 +23,7 @@ class DeviceVc: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        ATBlueToothContext.default.connect(device)
-//        self.title = (device?.peripheral.state == .connected ? "已连接" : "未知状态")
-        self.title = "你最帅"
-        device?.delegate = self
+       
 
     }
     //MARK: - Override
@@ -79,6 +76,9 @@ class DeviceVc: UIViewController {
     //MARK: - Life cycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        ATBlueToothContext.default.connect(device)
+        self.title = "你最帅"
+        device?.delegate = self
     }
     
     override func viewWillDisappear(_ animated: Bool) {

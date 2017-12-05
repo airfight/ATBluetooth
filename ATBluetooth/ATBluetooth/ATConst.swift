@@ -56,8 +56,6 @@ public enum PeripheralMode {
     case PeripheralMode
 }
 
-
-
 public enum ATBleDeviceState {
     
     case Connecting
@@ -87,6 +85,10 @@ public enum ATCharacteristicWriteType{
     case withOutResponse
     
 }
+
+
+/// if need to reconnect
+public var atbleCanreconnect = true
 
 extension CBCentralManager {
     
