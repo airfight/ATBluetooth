@@ -7,7 +7,9 @@ A Library only for iOS
 
 3.项目同时提供block以及代理回传数据方式
 
-4.项目持续优化完善中
+4.可无缝接入蓝牙开发
+
+5.项目持续优化完善中
 
 ----
 
@@ -40,6 +42,10 @@ func updatedIfWriteSuccess(_ result:Result<Any>?)
 //由设备的uuidString  此标志同一设备在不同的手机不同
 func reconnectDevice(_ uuidString:String?)
 ```
-4.详细教程请下载[主分支](https://github.com/airfight/ATBluetooth.git)查看
+5.主工厂 
+```
+ATBlueToothContext
+```
+5.详细教程请下载[主分支](https://github.com/airfight/ATBluetooth.git)查看
 
-5.欢迎star issues
+6.欢迎star issues
