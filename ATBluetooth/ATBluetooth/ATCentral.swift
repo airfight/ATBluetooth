@@ -30,6 +30,8 @@ class ATCentral: NSObject {
     private(set) open var connectedDevice: ATBleDevice?
     internal var configuration:ATConfiguration?
     internal var scanBlock:bleStartScan?
+    internal var writeCharacteristic:CBCharacteristic?
+    internal var readCharacteristic:CBCharacteristic?
     
     private lazy var dispatchQueue:DispatchQueue = DispatchQueue(label: "ATBluetooth.kit",attributes:[])
     private lazy var scanThread = Thread.init(target: self, selector: #selector(startScanPeripherals), object: nil)
@@ -166,6 +168,18 @@ class ATCentral: NSObject {
         
     }
     
+    public func writeData(_ data:Data,type:ATCharacteristicWriteType = .withResponse,block:writeResult = nil) {
+        
+        guard writeCharacteristic != nil else {
+            connectedDevice?.delegate?.updatedIfWriteSuccess(Result.Failure(NSError(domain: "no write access", code: 444, userInfo: nil)))
+            return
+        }
+
+        connectedDevice?.peripheral.writeValue(data, for: writeCharacteristic!, type: (type == .withResponse ? CBCharacteristicWriteType.withResponse : CBCharacteristicWriteType.withoutResponse))
+        
+    }
+    
+    
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
@@ -207,8 +221,8 @@ extension ATCentral:CBCentralManagerDelegate {
     ///discover perheral
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         
-        Print("discover peripheral:------\(peripheral.name ?? "nil")-----")
-        Print("advertisementData\(advertisementData.description)")
+//        Print("discover peripheral:------\(peripheral.name ?? "nil")-----")
+//        Print("advertisementData\(advertisementData.description)")
         // if CBPeripheral name is nil,untreated
         let device = ATBleDevice.init(peripheral, advertisementData: advertisementData, rssi: RSSI)
         
@@ -338,7 +352,7 @@ extension ATCentral:CBPeripheralDelegate {
     ///Invoked when you discover the characteristics of a specified service.
     internal func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         
-        Print("service.characteristics\(service.characteristics?.count)")
+//        Print("service.characteristics\(service.characteristics?.count)")
         
         guard service.characteristics != nil else {
             
@@ -348,6 +362,35 @@ extension ATCentral:CBPeripheralDelegate {
         for item: CBCharacteristic in service.characteristics! {
             
             Print(item)
+
+            switch item.properties {
+                case .write:
+                    print("可写")
+                    writeCharacteristic = item
+                    break
+                case .read:
+                    print("可读")
+                    readCharacteristic = item
+                    break
+                case .notify:
+                    print("notify")
+                    connectedDevice?.peripheral.setNotifyValue(true, for: item)
+                    break
+                case .authenticatedSignedWrites:
+                    print("authenticatedSignedWrites")
+                    break
+                case .broadcast:
+                    print("broadcast")
+                    break
+                case .writeWithoutResponse:
+                    print("writeWithoutResponse")
+                    break
+                case .indicate:
+                    print("indicate")
+                    break
+                default:
+                    break
+            }
             //readCharacteristics
             if item.uuid.uuidString == configuration?.readServiceCharacteristicUUIDString {
                 
@@ -391,11 +434,12 @@ extension ATCentral:CBPeripheralDelegate {
 //
         guard error == nil else {
             connectedDevice?.delegate?.updatedIfWriteSuccess(Result.Failure(error!))
+//            writeResult(Result.Failure(error!))
             return
         }
         
         connectedDevice?.delegate?.updatedIfWriteSuccess(Result.Success(characteristic.value))
-        
+//        writeResult(Result.Success(characteristic.value))
     }
     
     ///Invoked when you retrieve a specified characteristic descriptor’s value.

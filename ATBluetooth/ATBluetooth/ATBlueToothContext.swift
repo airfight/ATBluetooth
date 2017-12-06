@@ -51,6 +51,10 @@ class ATBlueToothContext: NSObject {
         atsuper?.startScanForDevices()
     }
     
+    func stopScan() {
+        
+    }
+    
     func connect(_ device:ATBleDevice?) {
 //        assert(atsuper == nil, "please implment config(_:)")
         atsuper?.connect(device)
@@ -64,6 +68,11 @@ class ATBlueToothContext: NSObject {
     func reconnectDevice(_ uuidString:String?) {
      
         atsuper?.reconnectDevice(uuidString)
+    }
+    
+    func writeData(_ data:Data,type:ATCharacteristicWriteType = .withResponse,block:writeResult = nil) {
+        
+        atsuper?.writeData(data, type: type, block: block)
     }
     
 }

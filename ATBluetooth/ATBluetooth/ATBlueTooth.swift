@@ -46,6 +46,11 @@ class ATBlueTooth: ATBlueToothSuper {
         }
     }
     
+    override func stopScan() {
+        super.stopScan()
+        atCentral?.stopScan()
+    }
+    
     override func connect(_ device:ATBleDevice?) {
         super.connect(device)
         atCentral?.connect(device)
@@ -59,6 +64,12 @@ class ATBlueTooth: ATBlueToothSuper {
     override func reconnectDevice(_ uuidString:String?) {
         super.reconnectDevice(uuidString)
         atCentral?.reconnectDevice(uuidString)
+    }
+    
+    override func writeData(_ data:Data,type:ATCharacteristicWriteType = .withResponse,block:writeResult = nil) {
+        super.writeData(data, type: type, block: block)
+        atCentral?.writeData(data, type: type, block: block)
+        
     }
     
 

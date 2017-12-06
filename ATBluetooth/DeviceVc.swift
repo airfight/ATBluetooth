@@ -41,9 +41,14 @@ class DeviceVc: UIViewController {
         
         switch sender.tag {
         case 666:
-            let data = Data.init(bytes: [0x12])
+//            let data = Data.init(bytes: [0x12])
+          let data = Data.init(bytes: [0x82])
             
-            device?.writeData(data)
+//            device?.writeData(data)
+          ATBlueToothContext.default.writeData(data, type: ATCharacteristicWriteType.withResponse, block: { (result) in
+            
+            
+          })
             break
         case 777:
              ATBlueToothContext.default.disconnectDevice()
@@ -115,6 +120,8 @@ extension DeviceVc:ATBleDeviceStateDelegate {
         
         switch result! {
         case .Success(let value):
+//            print(String.init(data: value!, encoding: String.Encoding.ascii))
+//            Print(String.init(data: value!, encoding: String.Encoding.utf8))
             Print(value)
         case .Failure(let error):
             Print(error)

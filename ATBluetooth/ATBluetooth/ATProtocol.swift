@@ -30,3 +30,7 @@ protocol ATBleDeviceStateDelegate {
     func updatedIfWriteSuccess(_ result:Result<Any>?)
     
 }
+
+// MARK: - block
+
+

@@ -47,6 +47,10 @@ class ATBlueToothSuper: NSObject {
         
     }
     
+    func stopScan() {
+        
+    }
+    
     func connect(_ device:ATBleDevice?){
         
     }
@@ -56,6 +60,11 @@ class ATBlueToothSuper: NSObject {
     }
     
     func reconnectDevice(_ uuidString:String?) {
+        
+    }
+    
+    func writeData(_ data:Data,type:ATCharacteristicWriteType = .withResponse,block:writeResult = nil) {
+     
         
     }
 }
