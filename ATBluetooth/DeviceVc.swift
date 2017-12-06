@@ -81,7 +81,7 @@ class DeviceVc: UIViewController {
     //MARK: - Life cycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        ATBlueToothContext.default.connect(device)
+        atBlueTooth.connect(device)
         self.title = device?.state?.description
         device?.delegate = self
 //        updatedATBleDeviceState((device?.state)!, error: nil)

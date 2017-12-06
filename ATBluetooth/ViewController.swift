@@ -8,11 +8,14 @@
 
 import UIKit
 
+let atBlueTooth = ATBlueToothContext.default
+
+
 class ViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    var atBlueTooth:ATBlueToothContext!
+//    var atBlueTooth:ATBlueToothContext!
     var currentDevice:ATBleDevice?
     var dataArr:[ATBleDevice] = [] {
         
@@ -30,7 +33,6 @@ class ViewController: UIViewController {
 //        atBlueTooth.centerManangerDelegate = self
 //        atBlueTooth.startScanForDevices()
         
-        atBlueTooth = ATBlueToothContext.default
         atBlueTooth.confing(.CenteMode)
         atBlueTooth.confing(.CenteMode)
         atBlueTooth.delegate = self
