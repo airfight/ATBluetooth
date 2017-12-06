@@ -37,11 +37,11 @@ class ATBlueTooth: ATBlueToothSuper {
         atCentral = ATCentral()
     }
     
-    override func startScanForDevices() {
-        super.startScanForDevices()
+    override func startScanForDevices(advertisingWithServices services: [String]? = nil) {
+        super.startScanForDevices(advertisingWithServices: services)
         atCentral?.scanBlock = { [weak self]() in
             
-            self?.atCentral?.startScanForDevices()
+            self?.atCentral?.startScanForDevices(advertisingWithServices: services)
             
         }
     }

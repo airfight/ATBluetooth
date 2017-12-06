@@ -43,7 +43,7 @@ class ATBlueToothSuper: NSObject {
     var delegate:ATContextDelegate?
     
     //implents
-    func startScanForDevices() {
+    func startScanForDevices(advertisingWithServices services: [String]? = nil) {
         
     }
     

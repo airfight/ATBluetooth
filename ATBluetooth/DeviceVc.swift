@@ -23,8 +23,8 @@ class DeviceVc: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-       
-
+//        Print(device?.state)
+        
     }
     //MARK: - Override
     
@@ -82,8 +82,11 @@ class DeviceVc: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         ATBlueToothContext.default.connect(device)
-        self.title = "你最帅"
+        self.title = device?.state?.description
         device?.delegate = self
+//        updatedATBleDeviceState((device?.state)!, error: nil)
+        
+
     }
     
     override func viewWillDisappear(_ animated: Bool) {

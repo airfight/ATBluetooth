@@ -46,17 +46,15 @@ class ATBlueToothContext: NSObject {
         }
     }
     
-    func startScanForDevices() {
-//        assert(atsuper == nil, "please implment config(_:)")
-        atsuper?.startScanForDevices()
+    func startScanForDevices(advertisingWithServices services: [String]? = nil) {
+        atsuper?.startScanForDevices(advertisingWithServices: services)
     }
     
     func stopScan() {
-        
+        atsuper?.stopScan()
     }
     
     func connect(_ device:ATBleDevice?) {
-//        assert(atsuper == nil, "please implment config(_:)")
         atsuper?.connect(device)
     }
     

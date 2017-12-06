@@ -34,7 +34,7 @@ class ViewController: UIViewController {
         atBlueTooth.confing(.CenteMode)
         atBlueTooth.confing(.CenteMode)
         atBlueTooth.delegate = self
-        atBlueTooth.startScanForDevices()
+        atBlueTooth.startScanForDevices(advertisingWithServices: ["FFF0"])
         if #available(iOS 11.0, *) {
             tableView.contentInsetAdjustmentBehavior = .never
         }
@@ -89,7 +89,10 @@ extension ViewController:UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
             //same device Don't need to disconnect
-            atBlueTooth.disconnectDevice()
+            if currentDevice?.uuid != dataArr[indexPath.row].uuid {
+                atBlueTooth.disconnectDevice()
+            }
+        
             currentDevice = dataArr[indexPath.row]
             self.performSegue(withIdentifier: "devicePushId", sender: nil)
     }

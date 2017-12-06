@@ -104,9 +104,13 @@ class ATCentral: NSObject {
         guard peripheral.state != .connected else {
             return
         }
-        
-        connectedDevice?.delegate?.updatedATBleDeviceState(.Connecting,error:nil)
+        DispatchQueue.main.async {
+            
+           self.connectedDevice?.delegate?.updatedATBleDeviceState(.Connecting,error:nil)
 
+        }
+        connectedDevice?.state = .Connecting
+        Print(connectedDevice?.peripheral.name)
         centralManager?.connect(peripheral, options: nil)
         
     }
@@ -124,8 +128,13 @@ class ATCentral: NSObject {
             }
             
             centralManager?.cancelPeripheralConnection(currentdevice.peripheral)
-            
-            currentdevice.delegate?.updatedATBleDeviceState(.Disconnect, error: nil)
+//            connectedDevice = nil
+            DispatchQueue.main.async {
+
+                currentdevice.delegate?.updatedATBleDeviceState(.Disconnect, error: nil)
+
+            }
+            currentdevice.state = .Disconnect
         } else {
             
             if device?.peripheral.state != .connected  {
@@ -134,8 +143,13 @@ class ATCentral: NSObject {
             
             centralManager?.cancelPeripheralConnection((device?.peripheral)!)
             
-            device?.delegate?.updatedATBleDeviceState(.Disconnect, error: nil)
+            DispatchQueue.main.async {
+                
+                device?.delegate?.updatedATBleDeviceState(.Disconnect, error: nil)
+
+            }
             
+            device?.state = .Disconnect
         }
         
     }
@@ -251,23 +265,36 @@ extension ATCentral:CBCentralManagerDelegate {
         
 //        device.peripheral.discoverServices([CBUUID(string: "180A")])
 
-        device.delegate?.updatedATBleDeviceState(.Connected, error: nil)
+        DispatchQueue.main.async {
+            
+            device.delegate?.updatedATBleDeviceState(.Connected, error: nil)
+
+        }
+        device.state = .Connected
         
     }
 
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
-        
-        connectedDevice?.delegate?.updatedATBleDeviceState(.ConnectFailed, error: error)
-        
+        DispatchQueue.main.async {
+            
+            self.connectedDevice?.delegate?.updatedATBleDeviceState(.ConnectFailed, error: error)
+            
+        }
+        connectedDevice?.state = .ConnectFailed
     }
     
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
-        
-        connectedDevice?.delegate?.updatedATBleDeviceState(.Disconnect, error: error)
-        
+                
         guard peripheral.identifier.uuidString == connectedDevice?.peripheral.identifier.uuidString else {
             return
         }
+        
+        DispatchQueue.main.async {
+            
+            self.connectedDevice?.delegate?.updatedATBleDeviceState(.Disconnect, error: error)
+        }
+        
+        connectedDevice?.state = .Disconnect
         
         if atbleCanreconnect {
             connect(connectedDevice)
@@ -352,8 +379,6 @@ extension ATCentral:CBPeripheralDelegate {
     ///Invoked when you discover the characteristics of a specified service.
     internal func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         
-//        Print("service.characteristics\(service.characteristics?.count)")
-        
         guard service.characteristics != nil else {
             
             return
@@ -365,28 +390,21 @@ extension ATCentral:CBPeripheralDelegate {
 
             switch item.properties {
                 case .write:
-                    print("可写")
                     writeCharacteristic = item
                     break
                 case .read:
-                    print("可读")
                     readCharacteristic = item
                     break
                 case .notify:
-                    print("notify")
                     connectedDevice?.peripheral.setNotifyValue(true, for: item)
                     break
                 case .authenticatedSignedWrites:
-                    print("authenticatedSignedWrites")
                     break
                 case .broadcast:
-                    print("broadcast")
                     break
                 case .writeWithoutResponse:
-                    print("writeWithoutResponse")
                     break
                 case .indicate:
-                    print("indicate")
                     break
                 default:
                     break
