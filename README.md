@@ -13,6 +13,7 @@ A Library only for iOS
 
 ## 使用教程
 1. 初始化
+```
 atBlueTooth = ATBlueToothContext.default
 atBlueTooth.confing(.CenteMode)//目前仅支持中心模式
 atBlueTooth.delegate = self //设置代理 ATCentralDelegte
@@ -21,8 +22,11 @@ atBlueTooth.startScanForDevices() //扫描所有服务
 
 //ATCentralDelegte
 func didFoundATBleDevice(_ device: ATBleDevice)
+
+```
 2.连接设备 
 
+```
 atBlueTooth.connect(device)
 device?.delegate = self //设置代理 ATBleDeviceStateDelegate
 
@@ -30,11 +34,12 @@ device?.delegate = self //设置代理 ATBleDeviceStateDelegate
 //ATBleDeviceStateDelegate
 func updatedATBleDeviceState(_ state:ATBleDeviceState,error:Error?)
 func updatedIfWriteSuccess(_ result:Result<Any>?)
-  
+  ```
 3.支持重新连接设备
+```
 //由设备的uuidString  此标志同一设备在不同的手机不同
 func reconnectDevice(_ uuidString:String?)
-
+```
 4.详细教程请下载[主分支](https://github.com/airfight/ATBluetooth.git)查看
 
 5.欢迎star issues
