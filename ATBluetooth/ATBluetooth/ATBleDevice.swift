@@ -40,17 +40,6 @@ class ATBleDevice: NSObject {
         analysisAdvertisementData()
     }
     
-    internal func writeData(_ data:Data,type:ATCharacteristicWriteType = .withResponse) {
-        
-//        guard configuration != nil else {
-//            return
-//        }
-        let charactert = peripheral.services?.filter{$0.uuid.uuidString == peripheral.identifier.uuidString}.first?.characteristics?.filter{$0.uuid.uuidString == "FFF1"}.first
-        peripheral.writeValue(data, for: charactert!,type: (type == .withResponse ? CBCharacteristicWriteType.withResponse : CBCharacteristicWriteType.withoutResponse))
-//        peripheral.writeValue(data, for: (configuration?.writeCharacteristic)!,type: (type == .withResponse ? CBCharacteristicWriteType.withResponse : CBCharacteristicWriteType.withoutResponse))
-        
-    }
-    
     internal func analysisAdvertisementData() {
         
      /*   let adva1 = advertisementData?[CBAdvertisementDataLocalNameKey]
@@ -77,7 +66,6 @@ class ATBleDevice: NSObject {
     override var description: String {
         return "[\(String(describing: rssi ?? 0))db] " + ((advertisementData![CBAdvertisementDataIsConnectable]! as AnyObject).debugDescription == "1" ? "可连接" : "不可连接")
     }
-    
     
     internal func registerPeripheralDelegate() {
         
