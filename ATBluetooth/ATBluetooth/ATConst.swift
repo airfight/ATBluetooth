@@ -86,7 +86,7 @@ public enum ATCharacteristicWriteType{
     
 }
 
-typealias writeResult = ((Result<Any>?)->Void)?
+ typealias writeResult = ((Result<Any>?)->Void)?
 
 /// if need to reconnect
 public var atbleCanreconnect = true

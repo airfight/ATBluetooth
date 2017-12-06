@@ -33,6 +33,8 @@ class ATCentral: NSObject {
     internal var writeCharacteristic:CBCharacteristic?
     internal var readCharacteristic:CBCharacteristic?
     
+    var atwriteBlock:((Result<Any>?)->Void)?
+    
     private lazy var dispatchQueue:DispatchQueue = DispatchQueue(label: "ATBluetooth.kit",attributes:[])
     private lazy var scanThread = Thread.init(target: self, selector: #selector(startScanPeripherals), object: nil)
     
@@ -89,12 +91,6 @@ class ATCentral: NSObject {
             return
         }
         
-//        if let oldDevice = connectedDevice {
-//
-//            guard device?.peripheral.identifier.uuidString == oldDevice.peripheral.identifier.uuidString else {
-//                return
-//            }
-//        }
         connectedDevice = device
         connectedDevice?.configuration = configuration
         guard let peripheral = connectedDevice?.peripheral else {
@@ -128,7 +124,7 @@ class ATCentral: NSObject {
             }
             
             centralManager?.cancelPeripheralConnection(currentdevice.peripheral)
-//            connectedDevice = nil
+
             DispatchQueue.main.async {
 
                 currentdevice.delegate?.updatedATBleDeviceState(.Disconnect, error: nil)
@@ -175,7 +171,7 @@ class ATCentral: NSObject {
                 Print("isConnecting or Connected")
                 return
             }
-            
+            connectedDevice = ATBleDevice.init(periPheralArr.first!, advertisementData: nil, rssi: nil)
             centralManager?.connect(periPheralArr.first!, options: nil)
             
         }
@@ -186,13 +182,15 @@ class ATCentral: NSObject {
         
         guard writeCharacteristic != nil else {
             connectedDevice?.delegate?.updatedIfWriteSuccess(Result.Failure(NSError(domain: "no write access", code: 444, userInfo: nil)))
+            if atwriteBlock != nil {
+                atwriteBlock!(Result.Failure(NSError(domain: "no write access", code: 444, userInfo: nil)))
+            }
             return
         }
-
+        atwriteBlock = block
         connectedDevice?.peripheral.writeValue(data, for: writeCharacteristic!, type: (type == .withResponse ? CBCharacteristicWriteType.withResponse : CBCharacteristicWriteType.withoutResponse))
         
     }
-    
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -452,11 +450,16 @@ extension ATCentral:CBPeripheralDelegate {
 //
         guard error == nil else {
             connectedDevice?.delegate?.updatedIfWriteSuccess(Result.Failure(error!))
-//            writeResult(Result.Failure(error!))
+            if atwriteBlock != nil {
+                atwriteBlock!(Result.Failure(error!))
+            }
             return
         }
         
         connectedDevice?.delegate?.updatedIfWriteSuccess(Result.Success(characteristic.value))
+        if atwriteBlock != nil {
+            atwriteBlock!(Result.Success(characteristic.value))
+        }
 //        writeResult(Result.Success(characteristic.value))
     }
     
@@ -475,6 +478,9 @@ extension ATCentral:CBPeripheralDelegate {
         
         if error != nil {
             connectedDevice?.delegate?.updatedIfWriteSuccess(Result.Failure(error!))
+            if atwriteBlock != nil {
+                atwriteBlock!(Result.Failure(error!))
+            }
         }
         
     }

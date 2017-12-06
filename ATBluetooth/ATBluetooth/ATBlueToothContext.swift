@@ -18,7 +18,7 @@ import UIKit
 class ATBlueToothContext: NSObject {
     
     private var atsuper:ATBlueToothSuper?
-    
+
     var delegate:ATContextDelegate? {
         didSet {
             atsuper?.delegate = delegate
@@ -68,7 +68,7 @@ class ATBlueToothContext: NSObject {
         atsuper?.reconnectDevice(uuidString)
     }
     
-    func writeData(_ data:Data,type:ATCharacteristicWriteType = .withResponse,block:writeResult = nil) {
+    func writeData(_ data:Data,type:ATCharacteristicWriteType = .withResponse,block: writeResult = nil) {
         
         atsuper?.writeData(data, type: type, block: block)
     }

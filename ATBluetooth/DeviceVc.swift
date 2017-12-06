@@ -46,7 +46,7 @@ class DeviceVc: UIViewController {
             
 //            device?.writeData(data)
           ATBlueToothContext.default.writeData(data, type: ATCharacteristicWriteType.withResponse, block: { (result) in
-            
+            Print(result)
             
           })
             break
@@ -86,7 +86,6 @@ class DeviceVc: UIViewController {
         device?.delegate = self
 //        updatedATBleDeviceState((device?.state)!, error: nil)
         
-
     }
     
     override func viewWillDisappear(_ animated: Bool) {
