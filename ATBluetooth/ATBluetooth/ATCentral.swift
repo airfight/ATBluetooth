@@ -233,8 +233,8 @@ extension ATCentral:CBCentralManagerDelegate {
     ///discover perheral
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         
-//        Print("discover peripheral:------\(peripheral.name ?? "nil")-----")
-//        Print("advertisementData\(advertisementData.description)")
+        Print("discover peripheral:------\(peripheral.name ?? "nil")-----")
+        Print("advertisementData\(advertisementData.description)")
         // if CBPeripheral name is nil,untreated
         let device = ATBleDevice.init(peripheral, advertisementData: advertisementData, rssi: RSSI)
         

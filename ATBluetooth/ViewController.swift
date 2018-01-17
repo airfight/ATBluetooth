@@ -36,7 +36,8 @@ class ViewController: UIViewController {
         atBlueTooth.confing(.CenteMode)
         atBlueTooth.confing(.CenteMode)
         atBlueTooth.delegate = self
-        atBlueTooth.startScanForDevices(advertisingWithServices: ["FFF0"])
+//        atBlueTooth.startScanForDevices(advertisingWithServices: ["FFF0"])
+        atBlueTooth.startScanForDevices()
         if #available(iOS 11.0, *) {
             tableView.contentInsetAdjustmentBehavior = .never
         }
